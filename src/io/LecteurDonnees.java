@@ -183,7 +183,7 @@ public class LecteurDonnees {
 		List<Robot> listeRobots = new ArrayList();
         try {
             int nbRobots = scanner.nextInt();
-            System.out.println("Nb de robots = " + nbRobots);
+            //System.out.println("Nb de robots = " + nbRobots);
             for (int i = 0; i < nbRobots; i++) {
                 listeRobots.add(lireRobot(i));
             }
@@ -208,8 +208,21 @@ public class LecteurDonnees {
             int col = scanner.nextInt();
             System.out.print("position = (" + lig + "," + col + ");");
             String type = scanner.next();
-			//Comment creer un objet robot du bon type ???
-            System.out.print("\t type = " + type);
+			Robot monRobot;
+            switch (type){
+				case "drone" :
+					monRobot=new Drone();
+					break;
+				case "roues" :
+					monRobot=new Roues();
+					break;
+				case "pattes" :
+					monRobot=new Pattes();
+					break;
+				case "chenilles" :
+					monRobot=new Chenilles();
+					break;
+			}
 
 
             // lecture eventuelle d'une vitesse du robot (entier)
@@ -221,17 +234,16 @@ public class LecteurDonnees {
                 System.out.print("valeur par defaut");
             } else {
                 int vitesse = Integer.parseInt(s);
-                System.out.print(vitesse);
+                //System.out.print(vitesse);
+				monRobot.setVitesse(vitesse);
             }
             verifieLigneTerminee();
-
-            System.out.println();
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format de robot invalide. "
                     + "Attendu: ligne colonne type [valeur_specifique]");
         }
-		return robot;
+		return monRobot;
     }
 
 
