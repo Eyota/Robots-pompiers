@@ -70,6 +70,15 @@ public class Carte {
 				return this.matrice[src.getLigne][src.getColonne-1];
 				break;
 		}
-	}  
+	} 
+	
+	public LinkedList<Case> ListeVoisins(Case src){
+		LinkedList<Case> List = new LinkedList<Case>();
+		
+		for (Direction dir : Direction.values()){
+			List.add(getVoisin(src,dir));
+		}
+		return List;
+	}
   
 }
