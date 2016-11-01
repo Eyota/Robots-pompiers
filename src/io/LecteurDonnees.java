@@ -88,8 +88,8 @@ public class LecteurDonnees {
             int tailleCases = scanner.nextInt();	// en m
             carte = new Carte(nbLignes, nbColonnes, tailleCases);
 
-            for (int lig = 0; lig < nbLignes; lig++) {
-                for (int col = 0; col < nbColonnes; col++) {
+            for (int col = 0; col < nbColonnes; col++) {
+                for (int lig = 0; lig < nbLignes; lig++) {
                     carte.setCase(lig, col, lireCase(lig, col));
                 }
             }
@@ -134,9 +134,9 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des incendies.
      */
-    private static List<Incendie> lireIncendies(Carte map) throws DataFormatException {
+    private static ArrayList<Incendie> lireIncendies(Carte map) throws DataFormatException {
         ignorerCommentaires();
-        List<Incendie> liste = new ArrayList();
+        ArrayList<Incendie> liste = new ArrayList();
         try {
             int nbIncendies = scanner.nextInt();
             System.out.println("Nb d'incendies = " + nbIncendies);
@@ -184,9 +184,9 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des robots.
      */
-    private static List<Robot> lireRobots(Carte map) throws DataFormatException {
+    private static ArrayList<Robot> lireRobots(Carte map) throws DataFormatException {
         ignorerCommentaires();
-	List<Robot> listeRobots = new ArrayList();
+	ArrayList<Robot> listeRobots = new ArrayList();
         try {
             int nbRobots = scanner.nextInt();
             //System.out.println("Nb de robots = " + nbRobots);

@@ -1,12 +1,13 @@
 package elements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DonneesSimulation {
 
     private Carte carte;
-    private List<Incendie> incendies;
-    private List<Robot> robots;
+    private ArrayList<Incendie> incendies;
+    private ArrayList<Robot> robots;
 
     /*public DonneesSimulation(Carte map, List<Incendie> listeFeux, List<Robot> listeRobots){
      this.carte = map;
@@ -19,11 +20,11 @@ public class DonneesSimulation {
         this.carte = carte;
     }
 
-    public void setIncendies(List<Incendie> incendies) {
+    public void setIncendies(ArrayList<Incendie> incendies) {
         this.incendies = incendies;
     }
 
-    public void setRobots(List<Robot> robots) {
+    public void setRobots(ArrayList<Robot> robots) {
         this.robots = robots;
     }
 
@@ -31,4 +32,12 @@ public class DonneesSimulation {
         return carte;
     }
 
+    public ArrayList<Incendie> getIncendies() {
+        return incendies;
+    }
+
+    public ArrayList<Robot> getRobots() {
+        return robots;
+    }
+    
 }
