@@ -11,7 +11,6 @@ import elements.NatureTerrain;
 import elements.RobotAChenilles;
 import elements.RobotAPattes;
 import elements.RobotARoues;
-import static io.LecteurDonnees.DonneesSimulation;
 import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
@@ -49,12 +48,16 @@ public class LecteurDonnees {
      * @param fichierDonnees nom du fichier à lire
      */
 
-	public static void DonneesSimulation(String fichierDonnees)
+	public static DonneesSimulation lire (String fichierDonnees)
 		throws FileNotFoundException, DataFormatException {
 		System.out.println("\n == Lecture du fichier" + fichierDonnees);
 		LecteurDonnees lecteur = new LecteurDonnees(fichierDonnees);
-		DonneesSimulation donnees = new DonneesSimulation(lireCarte(), lireIncendies(), lireRobots());
-		//A finir : lire Robots(i)
+		DonneesSimulation donnees = new DonneesSimulation();
+                Carte map = lireCarte();
+                donnees.setCarte(map);
+                donnees.setIncendies(lireIncendies(map));
+                donnees.setRobots(lireRobots(map));
+		return donnees;
 	}
 	
 	
@@ -131,14 +134,14 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des incendies.
      */
-    private static List<Incendie> lireIncendies() throws DataFormatException {
+    private static List<Incendie> lireIncendies(Carte map) throws DataFormatException {
         ignorerCommentaires();
         List<Incendie> liste = new ArrayList();
         try {
             int nbIncendies = scanner.nextInt();
             System.out.println("Nb d'incendies = " + nbIncendies);
             for (int i = 0; i < nbIncendies; i++) {
-                liste.add(lireIncendie(i));
+                liste.add(lireIncendie(i, map));
             }
 
         } catch (NoSuchElementException e) {
@@ -153,7 +156,7 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme incendie.
      * @param i
      */
-    private static Incendie lireIncendie(int i) throws DataFormatException {
+    private static Incendie lireIncendie(int i, Carte map) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Incendie " + i + ": ");
         Incendie incendie;
@@ -161,8 +164,8 @@ public class LecteurDonnees {
             int lig = scanner.nextInt();
             int col = scanner.nextInt();
             int intensite = scanner.nextInt();
-			Case pos = lireCase(lig, col);
-			incendie = new Incendie(pos, intensite);
+            Case pos = map.getCase(lig, col);
+            incendie = new Incendie(pos, intensite);
             if (intensite <= 0) {
                 throw new DataFormatException("incendie " + i
                         + "nb litres pour eteindre doit etre > 0");
@@ -181,14 +184,14 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des robots.
      */
-    private static List<Robot> lireRobots() throws DataFormatException {
+    private static List<Robot> lireRobots(Carte map) throws DataFormatException {
         ignorerCommentaires();
 	List<Robot> listeRobots = new ArrayList();
         try {
             int nbRobots = scanner.nextInt();
             //System.out.println("Nb de robots = " + nbRobots);
             for (int i = 0; i < nbRobots; i++) {
-                listeRobots.add(lireRobot(i));
+                listeRobots.add(lireRobot(i, map));
             }
 
         } catch (NoSuchElementException e) {
@@ -203,49 +206,48 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme robot.
      * @param i
      */
-    private static Robot lireRobot(int i) throws DataFormatException {
+    private static Robot lireRobot(int i, Carte map) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Robot " + i + ": ");
         Robot monRobot;
-        Carte carte = lireCarte();
 
         try {
             int lig = scanner.nextInt();
             int col = scanner.nextInt();
-            Case cases= carte.getCase(lig, col); 
+            Case cases= map.getCase(lig, col); 
             String type = scanner.next();
 
             switch (type){
 				case "drone" :
-					monRobot=new Drone(carte);
+					monRobot=new Drone(map);
 					break;
 				case "roues" :
-					monRobot=new RobotARoues(carte);
+					monRobot=new RobotARoues(map);
 					break;
 				case "pattes" :
-					monRobot=new RobotAPattes(carte);
+					monRobot=new RobotAPattes(map);
 					break;
 				case "chenilles" :
-					monRobot=new RobotAChenilles(carte);
+					monRobot=new RobotAChenilles(map);
 					break;
                                 default : 
-                                        monRobot=new Drone(carte);
+                                        monRobot=new Drone(map);
 					break;
 			}
 
             monRobot.setPosition(cases);
             
             // lecture eventuelle d'une vitesse du robot (entier)
-            System.out.print("; \t vitesse = ");
+            System.out.print(" vitesse = ");
             String s = scanner.findInLine("(\\d+)");	// 1 or more digit(s) ?
             // pour lire un flottant:    ("(\\d+(\\.\\d+)?)");
-
+                
             if (s == null) {
-                System.out.print("valeur par defaut");
+                System.out.print("valeur par defaut  ");
             } else {
                 int vitesse = Integer.parseInt(s);
-                //System.out.print(vitesse);
-				monRobot.setVitesse(vitesse);
+                System.out.print(vitesse);
+                monRobot.setVitesse(vitesse);
             }
             verifieLigneTerminee();
 

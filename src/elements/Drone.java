@@ -14,10 +14,10 @@ public class Drone extends Robot{
 	
 	@Override
 	public void setPosition(Case C) {
-		for (Case Voisin : map.ListeVoisins(super.position)){ //Si la case est voisine de sa position
-				if (C==Voisin) super.position=C;
-		}
-		
+		/*for (Case voisin : map.ListeVoisins(super.position)){ //Si la case est voisine de sa position
+				if (C==voisin) super.position=C;
+		}*/
+            super.position=C;
 	}
 	
 	@Override

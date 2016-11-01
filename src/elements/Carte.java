@@ -15,8 +15,6 @@ public class Carte {
 		this.tailleCases = taille;
 	}
   
-	//Evenement ???
-  
 	public int getNbLignes(){
 		return this.matrice.length;
 	}
