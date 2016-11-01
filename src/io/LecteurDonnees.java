@@ -1,6 +1,17 @@
 package io;
 
 
+import elements.Drone;
+import elements.DonneesSimulation;
+import elements.Robot;
+import elements.Carte;
+import elements.Incendie;
+import elements.Case;
+import elements.NatureTerrain;
+import elements.RobotAChenilles;
+import elements.RobotAPattes;
+import elements.RobotARoues;
+import static io.LecteurDonnees.DonneesSimulation;
 import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
@@ -37,22 +48,12 @@ public class LecteurDonnees {
      * LecteurDonnees.lire(fichierDonnees)
      * @param fichierDonnees nom du fichier à lire
      */
-    /*public static void lire(String fichierDonnees)
-        throws FileNotFoundException, DataFormatException {
-        System.out.println("\n == Lecture du fichier" + fichierDonnees);
-        LecteurDonnees lecteur = new LecteurDonnees(fichierDonnees);
-        lecteur.lireCarte();
-        lecteur.lireIncendies();
-        lecteur.lireRobots();
-        scanner.close();
-        System.out.println("\n == Lecture terminee");
-    }*/
-	
-	public static DonneesSimulation(String fichierDonnees)
+
+	public static void DonneesSimulation(String fichierDonnees)
 		throws FileNotFoundException, DataFormatException {
 		System.out.println("\n == Lecture du fichier" + fichierDonnees);
 		LecteurDonnees lecteur = new LecteurDonnees(fichierDonnees);
-		DonneesSimulation donnees = new DonneesSimulation(lireCarte, lireIncendies, lireRobots);
+		DonneesSimulation donnees = new DonneesSimulation(lireCarte(), lireIncendies(), lireRobots());
 		//A finir : lire Robots(i)
 	}
 	
@@ -75,13 +76,14 @@ public class LecteurDonnees {
      * Lit et affiche les donnees de la carte.
      * @throws ExceptionFormatDonnees
      */
-    private Carte lireCarte() throws DataFormatException {
+    private static Carte lireCarte() throws DataFormatException {
         ignorerCommentaires();
+        Carte carte;
         try {
             int nbLignes = scanner.nextInt();
             int nbColonnes = scanner.nextInt();
             int tailleCases = scanner.nextInt();	// en m
-            Carte carte = new Carte(nbLignes, nbColonnes, tailleCases);
+            carte = new Carte(nbLignes, nbColonnes, tailleCases);
 
             for (int lig = 0; lig < nbLignes; lig++) {
                 for (int col = 0; col < nbColonnes; col++) {
@@ -94,7 +96,7 @@ public class LecteurDonnees {
                     + "Attendu: nbLignes nbColonnes tailleCases");
         }
         // une ExceptionFormat levee depuis lireCase est remontee telle quelle
-		return carte;
+        return carte;
     }
 
 
@@ -103,35 +105,35 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees d'une case.
      */
-    private Case lireCase(int lig, int col) throws DataFormatException {
+    private static Case lireCase(int lig, int col) throws DataFormatException {
         ignorerCommentaires();
         String chaineNature = new String();
         NatureTerrain nature;
+        Case cases;
 
         try {
             chaineNature = scanner.next();
-            NatureTerrain nature = NatureTerrain.valueOf(chaineNature);
+            nature = NatureTerrain.valueOf(chaineNature);
 
             verifieLigneTerminee();
 
-            Case cases = nex Case(lig, col, nature);
-			return cases;
+            cases = new Case(lig, col, nature);
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format de case invalide. "
                     + "Attendu: nature altitude [valeur_specifique]");
         }
 
-        System.out.println();
+        return cases;
     }
 
 
     /**
      * Lit et affiche les donnees des incendies.
      */
-    private List<Incendie> lireIncendies() throws DataFormatException {
+    private static List<Incendie> lireIncendies() throws DataFormatException {
         ignorerCommentaires();
-		List<Incendie> liste = new ArrayList();
+        List<Incendie> liste = new ArrayList();
         try {
             int nbIncendies = scanner.nextInt();
             System.out.println("Nb d'incendies = " + nbIncendies);
@@ -143,6 +145,7 @@ public class LecteurDonnees {
             throw new DataFormatException("Format invalide. "
                     + "Attendu: nbIncendies");
         }
+        return liste;
     }
 
 
@@ -150,16 +153,16 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme incendie.
      * @param i
      */
-    private Incendie lireIncendie(int i) throws DataFormatException {
+    private static Incendie lireIncendie(int i) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Incendie " + i + ": ");
-
+        Incendie incendie;
         try {
             int lig = scanner.nextInt();
             int col = scanner.nextInt();
             int intensite = scanner.nextInt();
 			Case pos = lireCase(lig, col);
-			Incendie incendie = new Incendie(pos, intensite);
+			incendie = new Incendie(pos, intensite);
             if (intensite <= 0) {
                 throw new DataFormatException("incendie " + i
                         + "nb litres pour eteindre doit etre > 0");
@@ -171,16 +174,16 @@ public class LecteurDonnees {
             throw new DataFormatException("format d'incendie invalide. "
                     + "Attendu: ligne colonne intensite");
         }
-		return incendie;
+	return incendie;
     }
 
 
     /**
      * Lit et affiche les donnees des robots.
      */
-    private List<Robot> lireRobots() throws DataFormatException {
+    private static List<Robot> lireRobots() throws DataFormatException {
         ignorerCommentaires();
-		List<Robot> listeRobots = new ArrayList();
+	List<Robot> listeRobots = new ArrayList();
         try {
             int nbRobots = scanner.nextInt();
             //System.out.println("Nb de robots = " + nbRobots);
@@ -192,6 +195,7 @@ public class LecteurDonnees {
             throw new DataFormatException("Format invalide. "
                     + "Attendu: nbRobots");
         }
+        return listeRobots;
     }
 
 
@@ -199,32 +203,38 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme robot.
      * @param i
      */
-    private Robot lireRobot(int i) throws DataFormatException {
+    private static Robot lireRobot(int i) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Robot " + i + ": ");
+        Robot monRobot;
+        Carte carte = lireCarte();
 
         try {
             int lig = scanner.nextInt();
             int col = scanner.nextInt();
-            System.out.print("position = (" + lig + "," + col + ");");
+            Case cases= carte.getCase(lig, col); 
             String type = scanner.next();
-			Robot monRobot;
+
             switch (type){
 				case "drone" :
-					monRobot=new Drone();
+					monRobot=new Drone(carte);
 					break;
 				case "roues" :
-					monRobot=new Roues();
+					monRobot=new RobotARoues(carte);
 					break;
 				case "pattes" :
-					monRobot=new Pattes();
+					monRobot=new RobotAPattes(carte);
 					break;
 				case "chenilles" :
-					monRobot=new Chenilles();
+					monRobot=new RobotAChenilles(carte);
+					break;
+                                default : 
+                                        monRobot=new Drone(carte);
 					break;
 			}
 
-
+            monRobot.setPosition(cases);
+            
             // lecture eventuelle d'une vitesse du robot (entier)
             System.out.print("; \t vitesse = ");
             String s = scanner.findInLine("(\\d+)");	// 1 or more digit(s) ?
@@ -250,7 +260,7 @@ public class LecteurDonnees {
 
 
     /** Ignore toute (fin de) ligne commencant par '#' */
-    private void ignorerCommentaires() {
+    private static void ignorerCommentaires() {
         while(scanner.hasNext("#.*")) {
             scanner.nextLine();
         }
@@ -260,7 +270,7 @@ public class LecteurDonnees {
      * Verifie qu'il n'y a plus rien a lire sur cette ligne (int ou float).
      * @throws ExceptionFormatDonnees
      */
-    private void verifieLigneTerminee() throws DataFormatException {
+    private static void verifieLigneTerminee() throws DataFormatException {
         if (scanner.findInLine("(\\d+)") != null) {
             throw new DataFormatException("format invalide, donnees en trop.");
         }
