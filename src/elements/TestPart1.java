@@ -2,6 +2,7 @@
 package elements;
 
 import gui.GUISimulator;
+import gui.ImageElement;
 import gui.Rectangle;
 import io.LecteurDonnees;
 import java.awt.Color;
@@ -14,7 +15,7 @@ public class TestPart1 {
         DonneesSimulation donnees = LecteurDonnees.lire("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
         Carte map = donnees.getCarte();
         int taille = 80;               //map.getTailleCases();
-        GUISimulator ui = new GUISimulator(map.getNbColonnes()*taille, map.getNbLignes()*taille, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
+        GUISimulator ui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
         
         drawMap(ui, map);
         drawFire(ui, donnees.getIncendies());
@@ -61,8 +62,7 @@ public class TestPart1 {
     public static void drawFire(GUISimulator gui, ArrayList<Incendie> ListeIncendies){
         int i, x, y;
         int taille = 80;
-        for(i=0; i<ListeIncendies.size(); i++){
-            Incendie incendie = ListeIncendies.get(i); 
+        for(Incendie incendie : ListeIncendies){
             x=incendie.getPosition().getLigne();
             y=incendie.getPosition().getColonne();
             gui.addGraphicalElement(new Rectangle((y+1)*taille, (x+1)*taille, Color.red , Color.red , 50));
@@ -70,15 +70,34 @@ public class TestPart1 {
     }
     
     public static void drawRobots(GUISimulator gui, ArrayList<Robot> ListeRobots){
-        int i, x, y;
-        Robot robot;
+        int  x, y;
+        
         int taille = 80;
-        for(i=0; i<ListeRobots.size(); i++){
-            robot = ListeRobots.get(i); 
+        for(Robot robot : ListeRobots){
             x=robot.getPosition().getLigne();
             y=robot.getPosition().getColonne();
-            //Différencier les robots ? (Plus tard : trouver des images)
-            gui.addGraphicalElement(new Rectangle((y+1)*taille, (x+1)*taille, Color.black , Color.DARK_GRAY , 50));
+            String type = robot.getClass().getName();
+            System.out.println(type);
+            String path;
+            switch (type){
+                case "elements.Drone" :
+                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\drone.png";
+                    break;
+                case "elements.RobotAChenilles" :
+                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\wall-e.png";
+                    break;
+                case "elements.RobotAPattes" :
+                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\pattes.png";
+                    break;               
+                case "elements.RobotARoues" :
+                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
+                    break; 
+                default :
+                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
+                    break; 
+            }                   
+            //gui.addGraphicalElement(new Rectangle((y+1)*taille, (x+1)*taille, Color.black , Color.DARK_GRAY , 50));
+            gui.addGraphicalElement(new ImageElement((y+1)*taille-30, (x+1)*taille-30, path , 60 , 60, null));
         }    
     }
 }

@@ -22,9 +22,10 @@ public class RobotAChenilles extends Robot{
 		}
 		
 		else {
-			for (Case Voisin : map.ListeVoisins(super.position)){
+			/*for (Case Voisin : map.ListeVoisins(super.position)){
 					if (C==Voisin) super.position=C;
-			}
+			}*/
+                        super.position=C;
 		}
 		
 	}

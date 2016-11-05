@@ -16,9 +16,10 @@ public class RobotAPattes extends Robot{
 			System.out.println("Le robot ne peut pas se d�placer ici.");
 		}
 		else{
-			for (Case Voisin : map.ListeVoisins(super.position)){
+			/*for (Case Voisin : map.ListeVoisins(super.position)){
 					if (C==Voisin) super.position=C;
-			}
+			}*/
+                        super.position=C;
 		}
 		
 	}

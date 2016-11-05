@@ -218,16 +218,16 @@ public class LecteurDonnees {
             String type = scanner.next();
 
             switch (type){
-				case "drone" :
+				case "DRONE" :
 					monRobot=new Drone(map);
 					break;
-				case "roues" :
+				case "ROUES" :
 					monRobot=new RobotARoues(map);
 					break;
-				case "pattes" :
+				case "PATTES" :
 					monRobot=new RobotAPattes(map);
 					break;
-				case "chenilles" :
+				case "CHENILLES" :
 					monRobot=new RobotAChenilles(map);
 					break;
                                 default : 

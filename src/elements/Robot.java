@@ -51,6 +51,7 @@ public abstract class Robot{
 		if (Volume <= this.volumeEau){ //si le robot contient assez d'eau
 			this.volumeEau = this.volumeEau-Volume; //On diminue la quantit� d'eau dans le r�servoir
 			}
+                //Cas ouù Volume > this.volumeEau
 	}
 	
 	public void remplirReservoir(){
