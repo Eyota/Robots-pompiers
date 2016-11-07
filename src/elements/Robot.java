@@ -62,7 +62,7 @@ public abstract class Robot{
 		}
 	}
 	
-	
+	public abstract boolean peutRemplir();
 }
 
 

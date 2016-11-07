@@ -3,7 +3,7 @@ package elements;
 public class Incendie {
 
     private Case position;
-    private int intensite;
+    private double intensite;
 
     public Incendie(Case pos, int eau) {
         this.position = pos;
@@ -12,6 +12,14 @@ public class Incendie {
     
     public Case getPosition(){
         return this.position;
+    }
+    
+    public double getIntensite(){
+        return this.intensite;
+    }
+
+    public void setIntensite(int n){
+        this.intensite = n;
     }
     
 }

@@ -31,5 +31,13 @@ public class Drone extends Robot{
 		super.volumeEau=capacite;
 		}
 	}
+        
+        @Override
+        public boolean peutRemplir(){
+            if (position.getNature() == NatureTerrain.EAU)
+                return true;
+            else
+                return false;
+        }
 
 }

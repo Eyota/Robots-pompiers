@@ -23,5 +23,19 @@ public class Case {
 	public NatureTerrain getNature(){
 		return this.nature;
 	}
+        
+        public boolean sontVoisines(Case src, Case news){
+            double difCol;
+            double difLig;
+
+            difLig = src.getLigne() - news.getLigne();
+            difCol = src.getColonne() - news.getColonne();
+
+            if(difCol==-1 || difCol==0 || difCol==1){
+                if(difLig==-1 || difLig==0 || difLig==1)
+                    return true;
+            }
+            return false;
+        }
 
 }

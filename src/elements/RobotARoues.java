@@ -39,6 +39,11 @@ public class RobotARoues extends Robot{
 			else
 				return 0;
 	}
+        
+        @Override
+        public boolean peutRemplir(){
+            return false;
+        }
 
 }
 
