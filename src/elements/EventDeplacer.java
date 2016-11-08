@@ -5,10 +5,15 @@ public class EventDeplacer extends Evenement{
     private Case position;
     private Robot robot;
 
-    public EventDeplacer (int date, Robot robot, Case newPos){
-      super(date);
+    public EventDeplacer (int date, Robot robot, Direction dir){
+        super(date);
+        try {
       this.robot = robot;
-      this.position = newPos;
+      this.position = robot.getMap().getVoisin(robot.position, dir);
+        }
+        catch (UnreachableCaseException e){
+            System.out.println("Cette case n'existe pas");
+        }
     }
 
     public void execute(){
@@ -19,9 +24,8 @@ public class EventDeplacer extends Evenement{
       else{
         //on met le robot sur sa nouvelle case
         this.robot.setPosition(this.position);
-        //on considere que le chemin entre 2 cases fait n km
-        //on change la date
-        this.date = this.date + this.robot.getMap().getTailleCases()/this.robot.getVitesse(this.position.getNature());
+        
+        }
       }
-    }
+    
 }

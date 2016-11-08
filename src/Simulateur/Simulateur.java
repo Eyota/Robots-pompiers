@@ -28,16 +28,16 @@ public class Simulateur implements Simulable{
     private List liste = new ArrayList<Evenement>();
     private long date;
     
-    Simulateur (String path){
+    public Simulateur (String path){
         try {
             this.chemin=path;
         this.data = LecteurDonnees.lire(path);
         Carte map = this.data.getCarte();
         int taille = 80;               //map.getTailleCases();
         this.gui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
-        drawMap(gui, map);
-        drawFire(gui, this.data.getIncendies());
-        drawRobots(gui, this.data.getRobots());   
+        Simulateur.drawMap(gui, map);
+        Simulateur.drawFire(gui, this.data.getIncendies());
+        Simulateur.drawRobots(gui, this.data.getRobots());   
         }
         catch (FileNotFoundException e){
             System.out.println("Le fichier spécifié n'existe pas");
@@ -48,6 +48,14 @@ public class Simulateur implements Simulable{
         }
     }
 
+    public Simulateur() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public DonneesSimulation getData() {
+        return data;
+    }
+    
     @Override
     public void next() {
         Evenement enCours;
@@ -88,7 +96,7 @@ public class Simulateur implements Simulable{
         }        
     }
     
-    public void ajouteEventement(Evenement e){
+    public void ajouteEvenement(Evenement e){
         this.liste.add(e);
         Collections.sort(this.liste);
     }

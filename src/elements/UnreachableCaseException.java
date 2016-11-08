@@ -9,7 +9,7 @@ package elements;
  *
  * @author Agathe
  */
-class UnreachableCaseException extends Exception {
+public class UnreachableCaseException extends Exception {
     public UnreachableCaseException(){
         System.out.println("La case est inatteignable (non voisine).");
     }

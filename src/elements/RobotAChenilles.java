@@ -11,10 +11,9 @@ public class RobotAChenilles extends Robot{
 	public RobotAChenilles(Carte carte){
 		super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);
 	}
-	
-	@Override
-    public void setPosition(Case C) throws UnreachableCaseException, WrongCaseNatureException {
-
+    @Override
+    public void setPosition(Case C){
+        try{
         if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE)) {
             //terrain inaccessible pour ce type de robot
             throw new WrongCaseNatureException();
@@ -29,7 +28,29 @@ public class RobotAChenilles extends Robot{
             }
 
         }
-
+        }
+        catch (UnreachableCaseException e){
+            System.out.println("Cette case ne peut pas être atteinte");
+        }
+        catch (WrongCaseNatureException e){
+            System.out.println("Cette case n'a pas la bonne nature");
+        }
+    }
+    
+    @Override
+    public void setPositionInit(Case C){
+        try{
+        if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE)) {
+            //terrain inaccessible pour ce type de robot
+            throw new WrongCaseNatureException();
+        } else {
+            super.position = C;
+        }
+         
+        }
+        catch (WrongCaseNatureException e){
+            System.out.println("Cette case n'a pas la bonne nature");
+        }
     }
 
     @Override

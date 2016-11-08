@@ -15,7 +15,8 @@ public class Drone extends Robot{
     }
 
     @Override
-    public void setPosition(Case C) throws UnreachableCaseException{
+    public void setPosition(Case C) {
+       try {
         while (super.position != C) {
             for (Case voisin : map.ListeVoisins(super.position)) {
                 //Si la case est voisine de sa position
@@ -25,6 +26,14 @@ public class Drone extends Robot{
             } 
         throw new UnreachableCaseException();
         }
+        }
+        catch (UnreachableCaseException e){
+            System.out.println("Cette case ne peut pas être atteinte");
+        }
+    }
+    
+    public void setPositionInit(Case C) {
+        super.position = C;
     }
 
     @Override

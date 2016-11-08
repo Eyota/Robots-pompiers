@@ -35,19 +35,26 @@ public abstract class Robot {
 
     }
 
-    public double gettempsIntervention(int Volume) {
+    public Carte getMap() {
+        return map;
+    }
+    
+    
+    public double gettempsIntervention(double Volume) {
         return Volume / vitesseIntervention;
     }
 
     abstract public double getVitesse(NatureTerrain T);
 
-    abstract public void setPosition(Case C) throws UnreachableCaseException, WrongCaseNatureException;
+    abstract public void setPosition(Case C);
+    
+    abstract public void setPositionInit(Case C);
 
     public void setVitesse(double speed) {
         this.vitesse = speed;
     }
 
-    public void deverserEau(int Volume) throws EmptyTankException {
+    public void deverserEau(double Volume) throws EmptyTankException {
         if (Volume <= this.volumeEau) { //si le robot contient assez d'eau
             this.volumeEau = this.volumeEau - Volume; //On diminue la quantit� d'eau dans le r�servoir
         } else {

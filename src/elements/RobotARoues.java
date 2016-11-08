@@ -17,14 +17,16 @@ public class RobotARoues extends Robot{
 	}
 	
 	
-	@Override
-    public void setPosition(Case C) throws UnreachableCaseException, WrongCaseNatureException {
+    @Override
+    public void setPosition(Case C) {
+        try{
         if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE) || (C.getNature() == NatureTerrain.FORET)) {
             throw new WrongCaseNatureException();
         } else {
             while (C != super.position) {
                 for (Case Voisin : map.ListeVoisins(super.position)) {
-                    if (C == Voisin) {
+                    if (C.equals(Voisin)) {
+                        System.out.println("Test");
                         super.position = C;
                     }
                 }
@@ -32,8 +34,33 @@ public class RobotARoues extends Robot{
             }
 
         }
+        }
+        catch (UnreachableCaseException e){
+            System.out.println("Le robot ne peut pas atteindre cette case car elle n'existe pas");
+        }
+        catch (WrongCaseNatureException e){
+            System.out.println("Cette case n'a pas la bonne nature");
+        }
+        
     }
 
+    @Override
+    public void setPositionInit(Case C) {
+        try{
+        if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE) || (C.getNature() == NatureTerrain.FORET)) {
+            throw new WrongCaseNatureException();
+        } else {
+            super.position = C;
+        }
+        }
+                
+        catch (WrongCaseNatureException e){
+            System.out.println("Cette case n'a pas la bonne nature");
+        }
+        
+    }
+    
+    
     @Override
     public double getVitesse(NatureTerrain T
     ) {

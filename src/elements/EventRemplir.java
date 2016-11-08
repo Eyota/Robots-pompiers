@@ -18,9 +18,14 @@ public class EventRemplir extends Evenement{
 
       else{
         //on considere que le reservoir est toujours vide
+        try {
         this.robot.remplirReservoir();
         this.date = this.date + this.robot.getTempsRemplissage()/3600;//en heure ???
         }
+        catch(CaseWithoutWaterException c){
+            System.out.println("Le robot ne peut pas se remplir ici");
+        }
+      }
     }
 
 }

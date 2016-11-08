@@ -11,7 +11,10 @@ import elements.NatureTerrain;
 import elements.RobotAChenilles;
 import elements.RobotAPattes;
 import elements.RobotARoues;
+import elements.UnreachableCaseException;
+import elements.WrongCaseNatureException;
 import java.io.*;
+import static java.lang.System.exit;
 import java.util.*;
 import java.util.zip.DataFormatException;
 
@@ -86,6 +89,8 @@ public class LecteurDonnees {
             int nbLignes = scanner.nextInt();
             int nbColonnes = scanner.nextInt();
             int tailleCases = scanner.nextInt();	// en m
+            System.out.println("Carte : "+ nbLignes + "  " + nbColonnes + "\n");
+            
             carte = new Carte(nbLignes, nbColonnes, tailleCases);
 
             for (int col = 0; col < nbColonnes; col++) {
@@ -235,7 +240,7 @@ public class LecteurDonnees {
 					break;
 			}
 
-            monRobot.setPosition(cases);
+            monRobot.setPositionInit(cases); 
             
             // lecture eventuelle d'une vitesse du robot (entier)
             System.out.print(" vitesse = ");
@@ -255,6 +260,7 @@ public class LecteurDonnees {
             throw new DataFormatException("format de robot invalide. "
                     + "Attendu: ligne colonne type [valeur_specifique]");
         }
+
 		return monRobot;
     }
 

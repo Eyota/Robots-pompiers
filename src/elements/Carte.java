@@ -32,10 +32,10 @@ public class Carte {
 	}
 	
 	public void setCase(int lig, int col, Case cases){
-            if (lig<0 || lig>this.getNbLignes() || col<0 || col>this.getNbColonnes()){
-		this.matrice[lig][col] = cases;
-            }
-            //else throw new CaseDoesntExistExecption;
+            //if (lig<0 || lig>this.getNbLignes() || col<0 || col>this.getNbColonnes()){
+		//throw new CaseDoesntExistExecption;
+            //}
+            this.matrice[lig][col] = cases;  
 	}
   
 	public boolean voisinExiste(Case src, Direction dir){
@@ -44,10 +44,10 @@ public class Carte {
 				if (src.getLigne() > 0) return true;
 				else return false;
 			case SUD :
-				if (src.getLigne() < this.getNbLignes()) return true;
+				if (src.getLigne() < this.getNbLignes()-1) return true;
 				else return false;
 			case EST :
-				if (src.getColonne() < this.getNbColonnes()) return true;
+				if (src.getColonne() < this.getNbColonnes()-1) return true;
 				else return false;
 			case OUEST :
 				if (src.getColonne() > 0) return true;
@@ -57,9 +57,9 @@ public class Carte {
 		}
 	}
 	
-	public Case getVoisin(Case src, Direction dir){
+	public Case getVoisin(Case src, Direction dir) throws UnreachableCaseException{
 		if (!this.voisinExiste(src, dir)){
-			//raise execption
+			throw new UnreachableCaseException();
 		}
 		switch(dir){
 			case NORD :
@@ -77,12 +77,16 @@ public class Carte {
 	
 	public List<Case> ListeVoisins(Case src){
 		ArrayList<Case> List = new ArrayList<Case>();
-		
+		try{
 		for (Direction dir : Direction.values()){
                         if (this.voisinExiste(src, dir)){
                             List.add(getVoisin(src,dir));
                         }
 		}
+                }
+                catch (UnreachableCaseException e){
+                    System.out.println("On ne devrait pas arriver ici");
+                }
 		return List;
 	}
   
