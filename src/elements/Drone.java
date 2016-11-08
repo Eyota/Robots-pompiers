@@ -8,36 +8,43 @@ public class Drone extends Robot{
 	private final static double vitesseIntervention=10000/30;
 	
 	
-	public Drone(Carte carte){
-		super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);
-	}
-	
-	@Override
-	public void setPosition(Case C) {
-		for (Case voisin : map.ListeVoisins(super.position)){ //Si la case est voisine de sa position
-				if (C==voisin) super.position=C;
-		}
-            super.position=C;
-	}
-	
-	@Override
-	public double getVitesse(NatureTerrain T){
-		return vitesse;
-	}
-	
-	@Override
-	public void remplirReservoir(){
-		if (position.getNature()==NatureTerrain.EAU){ //S'il est plac� sur une case d'eau
-                    super.volumeEau=capacite;
-		}
-	}
+	public Drone(Carte carte) {
+
+        super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);
+
+    }
+
+    @Override
+    public void setPosition(Case C) throws UnreachableCaseException{
+        while (super.position != C) {
+            for (Case voisin : map.ListeVoisins(super.position)) {
+                //Si la case est voisine de sa position
+                if (C == voisin) {
+                    super.position = C;
+                }
+            } 
+        throw new UnreachableCaseException();
+        }
+    }
+
+    @Override
+    public double getVitesse(NatureTerrain T) {
+        return vitesse;
+    }
+
+    @Override
+    public void remplirReservoir() {
+        if (position.getNature() == NatureTerrain.EAU) { //S'il est plac� sur une case d'eau
+            super.volumeEau = capacite;
+        }
+    }
         
-        @Override
-        public boolean peutRemplir(){
-            if (position.getNature() == NatureTerrain.EAU)
-                return true;
-            else
-                return false;
+    @Override
+    public boolean peutRemplir(){
+        if (position.getNature() == NatureTerrain.EAU)
+            return true;
+        else
+            return false;
         }
 
 }

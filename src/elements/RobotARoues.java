@@ -18,27 +18,31 @@ public class RobotARoues extends Robot{
 	
 	
 	@Override
-	public void setPosition(Case C) {
-		if ((C.getNature()==NatureTerrain.EAU)||(C.getNature()==NatureTerrain.ROCHE)||(C.getNature()==NatureTerrain.FORET)){
-			System.out.println("Le robot ne peut pas se d�placer ici.");
-		}
-		else{
-			for (Case Voisin : map.ListeVoisins(super.position)){ //Si case voisine de sa position
-					if (C==Voisin) super.position=C;
-			}
-                        super.position=C;
-		}	
-		
-		
-	}
-	
-	@Override
-	public double getVitesse(NatureTerrain T){
-			if (T==(NatureTerrain.HABITAT)||(T==NatureTerrain.TERRAIN_LIBRE)) 
-				return vitesse;
-			else
-				return 0;
-	}
+    public void setPosition(Case C) throws UnreachableCaseException, WrongCaseNatureException {
+        if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE) || (C.getNature() == NatureTerrain.FORET)) {
+            throw new WrongCaseNatureException();
+        } else {
+            while (C != super.position) {
+                for (Case Voisin : map.ListeVoisins(super.position)) {
+                    if (C == Voisin) {
+                        super.position = C;
+                    }
+                }
+                throw new UnreachableCaseException();
+            }
+
+        }
+    }
+
+    @Override
+    public double getVitesse(NatureTerrain T
+    ) {
+        if (T == (NatureTerrain.HABITAT) || (T == NatureTerrain.TERRAIN_LIBRE)) {
+            return vitesse;
+        } else {
+            return 0;
+        }
+    }
         
         
         @Override

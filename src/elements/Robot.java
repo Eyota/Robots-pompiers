@@ -8,7 +8,6 @@ public abstract class Robot {
     private int capacite; //en litres
     private double tempsRemplissage; //en s
     private double vitesseIntervention; // en L/s
-    @SuppressWarnings("unused") //Utilis�e dans les classes h�rit�es de robot.
     private double vitesse; // en km/h. 
 
     protected Robot(Carte carte, int cap, int tpsRemplissage, double vtIntervention, double vit) {
@@ -20,7 +19,7 @@ public abstract class Robot {
         this.vitesse = vit;
     }
 
-    public Case getPosition() {
+     public Case getPosition() {
 
         return this.position;
     }
@@ -36,33 +35,39 @@ public abstract class Robot {
 
     }
 
-    public Carte getMap() {
-        return map;
+    public double gettempsIntervention(int Volume) {
+        return Volume / vitesseIntervention;
     }
 
-    abstract public void setPosition(Case C);
+    abstract public double getVitesse(NatureTerrain T);
 
-    abstract public double getVitesse(NatureTerrain T); //OK mais voir impl�mentation lecture fichier
+    abstract public void setPosition(Case C) throws UnreachableCaseException, WrongCaseNatureException;
 
     public void setVitesse(double speed) {
         this.vitesse = speed;
     }
 
-    public double gettempsIntervention(double Volume) {
-        return Volume / vitesseIntervention;
-    }
-
-    public void deverserEau(double Volume) {
+    public void deverserEau(int Volume) throws EmptyTankException {
         if (Volume <= this.volumeEau) { //si le robot contient assez d'eau
             this.volumeEau = this.volumeEau - Volume; //On diminue la quantit� d'eau dans le r�servoir
+        } else {
+            this.volumeEau = 0;
+            throw new EmptyTankException();
         }
-        //Cas ouù Volume > this.volumeEau
     }
 
-    public void remplirReservoir() {
+    public void remplirReservoir() throws CaseWithoutWaterException {
         for (Case Voisin : map.ListeVoisins(position)) { //Si la case est voisine de sa position
+
             if (Voisin.getNature() == NatureTerrain.EAU) { //et qu'elle est compos�e d'eau
+
                 this.volumeEau = capacite; //remplissage
+                break;
+
+            } else {
+
+                throw new CaseWithoutWaterException();
+
             }
         }
     }

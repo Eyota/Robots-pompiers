@@ -12,31 +12,39 @@ public class RobotAChenilles extends Robot{
 		super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);
 	}
 	
-	
 	@Override
-	public void setPosition(Case C) {
+    public void setPosition(Case C) throws UnreachableCaseException, WrongCaseNatureException {
 
-		if ((C.getNature()==NatureTerrain.EAU) || (C.getNature()==NatureTerrain.ROCHE)){ 
-			//terrain inaccessible pour ce type de robot
-			System.out.println("Le robot ne peut pas se déplacer ici.");       //Execption
-		}
-		
-		else {
-			for (Case Voisin : map.ListeVoisins(super.position)){
-					if (C==Voisin) super.position=C;
-			}
-                        super.position=C;
-		}
-		
-	}
-		
-	@Override
-	public double getVitesse(NatureTerrain T){
-		if ((T==NatureTerrain.EAU)||(T==NatureTerrain.ROCHE)) return 0;
-		if (T==NatureTerrain.FORET) return vitesse/2;
-		else return vitesse;
-		
-	}
+        if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE)) {
+            //terrain inaccessible pour ce type de robot
+            throw new WrongCaseNatureException();
+        } else {
+            while (C != super.position) {
+                for (Case Voisin : map.ListeVoisins(super.position)) {
+                    if (C == Voisin) {
+                        super.position = C;
+                    }
+                }
+                throw new UnreachableCaseException();
+            }
+
+        }
+
+    }
+
+    @Override
+    public double getVitesse(NatureTerrain T) {
+        if ((T == NatureTerrain.EAU) || (T == NatureTerrain.ROCHE)) {
+            return 0;
+        }
+        if (T == NatureTerrain.FORET) {
+            return vitesse / 2;
+        } else {
+            return vitesse;
+        }
+
+    }
+	
         
         @Override
         public boolean peutRemplir(){
