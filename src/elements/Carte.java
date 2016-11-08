@@ -32,7 +32,10 @@ public class Carte {
 	}
 	
 	public void setCase(int lig, int col, Case cases){
+            if (lig<0 || lig>this.getNbLignes() || col<0 || col>this.getNbColonnes()){
 		this.matrice[lig][col] = cases;
+            }
+            //else throw new CaseDoesntExistExecption;
 	}
   
 	public boolean voisinExiste(Case src, Direction dir){
@@ -76,7 +79,9 @@ public class Carte {
 		ArrayList<Case> List = new ArrayList<Case>();
 		
 		for (Direction dir : Direction.values()){
-			List.add(getVoisin(src,dir));
+                        if (this.voisinExiste(src, dir)){
+                            List.add(getVoisin(src,dir));
+                        }
 		}
 		return List;
 	}

@@ -2,13 +2,13 @@
 package elements;
 
 public abstract class Evenement implements Comparable<Evenement> {
-    private long date;
+    protected double date;
     
     public Evenement(long date){
         this.date = date;
     }
     
-    public long getDate(){
+    public double getDate(){
         return this.date;
     }
     

@@ -18,13 +18,13 @@ public class RobotAChenilles extends Robot{
 
 		if ((C.getNature()==NatureTerrain.EAU) || (C.getNature()==NatureTerrain.ROCHE)){ 
 			//terrain inaccessible pour ce type de robot
-			System.out.println("Le robot ne peut pas se d�placer ici.");
+			System.out.println("Le robot ne peut pas se déplacer ici.");       //Execption
 		}
 		
 		else {
-			/*for (Case Voisin : map.ListeVoisins(super.position)){
+			for (Case Voisin : map.ListeVoisins(super.position)){
 					if (C==Voisin) super.position=C;
-			}*/
+			}
                         super.position=C;
 		}
 		

@@ -18,7 +18,7 @@ public class Incendie {
         return this.intensite;
     }
 
-    public void setIntensite(int n){
+    public void setIntensite(double n){
         this.intensite = n;
     }
     

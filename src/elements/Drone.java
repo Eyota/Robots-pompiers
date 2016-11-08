@@ -14,9 +14,9 @@ public class Drone extends Robot{
 	
 	@Override
 	public void setPosition(Case C) {
-		/*for (Case voisin : map.ListeVoisins(super.position)){ //Si la case est voisine de sa position
+		for (Case voisin : map.ListeVoisins(super.position)){ //Si la case est voisine de sa position
 				if (C==voisin) super.position=C;
-		}*/
+		}
             super.position=C;
 	}
 	
@@ -28,7 +28,7 @@ public class Drone extends Robot{
 	@Override
 	public void remplirReservoir(){
 		if (position.getNature()==NatureTerrain.EAU){ //S'il est plac� sur une case d'eau
-		super.volumeEau=capacite;
+                    super.volumeEau=capacite;
 		}
 	}
         

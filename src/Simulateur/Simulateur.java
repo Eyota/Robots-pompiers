@@ -2,32 +2,90 @@
 package Simulateur;
 
 import elements.Carte;
+import elements.DonneesSimulation;
 import elements.Evenement;
 import elements.Incendie;
 import elements.NatureTerrain;
 import elements.Robot;
+import static elements.TestPart1.drawFire;
+import static elements.TestPart1.drawRobots;
 import gui.GUISimulator;
 import gui.ImageElement;
 import gui.Rectangle;
 import gui.Simulable;
+import io.LecteurDonnees;
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 public class Simulateur implements Simulable{
     private GUISimulator gui; 
-    private List liste = new ArrayList();
-    private int date;
+    private DonneesSimulation data;
+    private String chemin;
+    private List liste = new ArrayList<Evenement>();
+    private long date;
     
-    //Constructeur qui prend en paramètre un GUI ?
+    Simulateur (String path){
+        try {
+            this.chemin=path;
+        this.data = LecteurDonnees.lire(path);
+        Carte map = this.data.getCarte();
+        int taille = 80;               //map.getTailleCases();
+        this.gui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
+        drawMap(gui, map);
+        drawFire(gui, this.data.getIncendies());
+        drawRobots(gui, this.data.getRobots());   
+        }
+        catch (FileNotFoundException e){
+            System.out.println("Le fichier spécifié n'existe pas");
+            //exit(1);
+        }
+        catch (DataFormatException d){
+            System.out.println("Le fichier spécifié n'a pas le bon format");
+        }
+    }
 
     @Override
     public void next() {
+        Evenement enCours;
+        this.incrementeDate();
+        if (!this.simulationTerminee()){
+            enCours = (Evenement) this.liste.get(0); 
+            while (enCours.getDate()<= this.date){
+                enCours.execute();
+                this.liste.remove(0);
+                if (!this.simulationTerminee()){
+                    enCours = (Evenement) this.liste.get(0);
+                }
+                else break;
+            }
+            drawFire(this.gui, this.data.getIncendies());
+            drawRobots(this.gui, this.data.getRobots());
+        }
+        else System.out.println("Simulation terminée");
     }
 
     @Override
     public void restart() {
+        try {
+        this.data = LecteurDonnees.lire(this.chemin); 
+        Carte map = this.data.getCarte();
+        int taille = 80;               //map.getTailleCases();
+        this.gui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
+        drawMap(gui, map);
+        drawFire(gui, this.data.getIncendies());
+        drawRobots(gui, this.data.getRobots());  
+        }
+        catch (FileNotFoundException e){
+            System.out.println("Le fichier spécifié n'existe pas");
+            //exit(1);
+        }
+        catch (DataFormatException d){
+            System.out.println("Le fichier spécifié n'a pas le bon format");
+        }        
     }
     
     public void ajouteEventement(Evenement e){

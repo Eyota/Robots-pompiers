@@ -23,9 +23,9 @@ public class RobotARoues extends Robot{
 			System.out.println("Le robot ne peut pas se d�placer ici.");
 		}
 		else{
-			/*for (Case Voisin : map.ListeVoisins(super.position)){ //Si case voisine de sa position
+			for (Case Voisin : map.ListeVoisins(super.position)){ //Si case voisine de sa position
 					if (C==Voisin) super.position=C;
-			}*/
+			}
                         super.position=C;
 		}	
 		
@@ -40,8 +40,14 @@ public class RobotARoues extends Robot{
 				return 0;
 	}
         
+        
         @Override
-        public boolean peutRemplir(){
+        public boolean peutRemplir(){  
+            for (Case Voisin : this.map.ListeVoisins(this.position)){ //Si la case est voisine de sa position
+                if (Voisin.getNature()==NatureTerrain.EAU){ //et qu'elle est composee d'eau
+                    return true;
+                }
+            }
             return false;
         }
 

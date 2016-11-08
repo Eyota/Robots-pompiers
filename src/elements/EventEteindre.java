@@ -12,9 +12,9 @@ public class EventEteindre extends Evenement{
       this.fire = fire;
     }
 
-    public void execute(){
+    public void execute(){      //try déverser un volume correspondant à l'intensité ---> catch si pas assez d'eau on met à jour l'intensité
       //si le robot n'est pas sur la case de l'incendie
-      if (this.robot.getPosition()== this.fire.getPosition())){     //On ne peut pas faire ça sur des objets...
+      if (this.robot.getPosition().equals((Object)this.fire.getPosition())){
         //exception Evenement impossible
       }
 
@@ -22,7 +22,7 @@ public class EventEteindre extends Evenement{
         //si le robot peut eteindre l'incendie
         if (this.fire.getIntensite() <= this.robot.getVolumeEau()){
           //on change la date
-          this.date = this.date + this.robot.gettempsIntervention(this.fire.getIntensite());
+          super.date = super.date + this.robot.gettempsIntervention(this.fire.getIntensite());
           //on eteind le feu
           this.fire.setIntensite(0);
           //on vide le reservoir

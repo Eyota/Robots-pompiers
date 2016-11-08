@@ -13,7 +13,7 @@ public class EventDeplacer extends Evenement{
 
     public void execute(){
       //si les cases ne sont pas voisines
-      if (!sontVoisines(this.robot.getPosition(),this.position)){
+      if (!Case.sontVoisines(this.robot.getPosition(),this.position)){
         //exception deplacement impossible
       }
       else{
@@ -21,7 +21,7 @@ public class EventDeplacer extends Evenement{
         this.robot.setPosition(this.position);
         //on considere que le chemin entre 2 cases fait n km
         //on change la date
-        this.date = this.date + n/this.robot.getVitesse();
+        this.date = this.date + this.robot.getMap().getTailleCases()/this.robot.getVitesse(this.position.getNature());
       }
     }
 }

@@ -16,9 +16,9 @@ public class RobotAPattes extends Robot{
 			System.out.println("Le robot ne peut pas se d�placer ici.");
 		}
 		else{
-			/*for (Case Voisin : map.ListeVoisins(super.position)){
+			for (Case Voisin : map.ListeVoisins(super.position)){
 					if (C==Voisin) super.position=C;
-			}*/
+			}
                         super.position=C;
 		}
 		
@@ -32,7 +32,8 @@ public class RobotAPattes extends Robot{
 	}
 
 	@Override
-	public void deverserEau(int Volume) { //le robot a de la poudre dans le r�servoir, et donc un r�servoir infini
+	public void deverserEau(double Volume) { //le robot a de la poudre dans le r�servoir, et donc un r�servoir infini
+            int x =1;
 	}
 
 	@Override
@@ -41,11 +42,6 @@ public class RobotAPattes extends Robot{
         
         @Override
         public boolean peutRemplir(){
-            for (Case Voisin : this.map.ListeVoisins(this.position)){ //Si la case est voisine de sa position
-                if (Voisin.getNature()==NatureTerrain.EAU){ //et qu'elle est composee d'eau
-                    return true;
-                }
-            }
             return false;
         }
 	

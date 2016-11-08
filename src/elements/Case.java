@@ -24,7 +24,7 @@ public class Case {
 		return this.nature;
 	}
         
-        public boolean sontVoisines(Case src, Case news){
+        public static boolean sontVoisines(Case src, Case news){         //??????
             double difCol;
             double difLig;
 

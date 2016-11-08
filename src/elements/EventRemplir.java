@@ -19,7 +19,8 @@ public class EventRemplir extends Evenement{
       else{
         //on considere que le reservoir est toujours vide
         this.robot.remplirReservoir();
-        this.date = this.date + this.robot.getTempsRemplissage()/3600;//en heure
+        this.date = this.date + this.robot.getTempsRemplissage()/3600;//en heure ???
+        }
     }
 
 }
