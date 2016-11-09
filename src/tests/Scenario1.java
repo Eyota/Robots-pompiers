@@ -14,6 +14,7 @@ import elements.Evenement;
 import elements.EventDeplacer;
 import elements.EventEteindre;
 import elements.EventRemplir;
+import elements.Incendie;
 import elements.Robot;
 import elements.RobotARoues;
 import io.LecteurDonnees;
@@ -43,37 +44,32 @@ public class Scenario1 {
         /*
         On lit le fichier carteSujet.map
         */
-        Simulateur simulation= new Simulateur();
-        int date;
-        date=0;
-        DonneesSimulation donnees = LecteurDonnees.lire("C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\carteSujet.map");
-        Carte Mappy = donnees.getCarte();
-        
-        //initialisation du robot et de sa position
-        Robot WallE = new RobotARoues(Mappy);
-        WallE.setPosition(Mappy.getCase(4, 5));
-        
+        Simulateur simulation= new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
+        simulation.getGui().setSimulable(simulation);
+        int date=1;
+        Robot WallE = simulation.getData().getRobots().get(0);
+        Incendie petitFeu = simulation.getData().getIncendies().get(4);
+        Carte Mappy = simulation.getData().getCarte();
+                
         //création des évènements
-        Evenement Monter= new EventDeplacer(date, WallE, Mappy.getVoisin(WallE.getPosition(), Direction.NORD));
-        Evenement Babord= new EventDeplacer(date, WallE, Mappy.getVoisin(WallE.getPosition(), Direction.OUEST));
-        Evenement Tribord= new EventDeplacer(date, WallE, Mappy.getVoisin(WallE.getPosition(), Direction.EST));
-        Evenement Glouglou = new EventRemplir();
-        Evenement Splash = new EventEteindre();
+        Evenement Monter= new EventDeplacer(date, WallE, Direction.NORD);
+        Evenement Babord= new EventDeplacer(date, WallE,  Direction.OUEST);
+        Evenement Tribord= new EventDeplacer(date, WallE,  Direction.EST);
+        Evenement Glouglou = new EventRemplir(date, WallE);
+        Evenement Splash = new EventEteindre(date, WallE, petitFeu);
         
         //simulation
-        simulation.ajouteEvenement(Monter);
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE, Direction.OUEST));
         date++;
-        simulation.ajouteEvenement(Splash);
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.NORD));
         date++;
-        simulation.ajouteEvenement(Babord);
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.OUEST));
         date++;
-        simulation.ajouteEvenement(Babord);
+        simulation.ajouteEvenement(new EventRemplir(date, WallE));
         date++;
-        simulation.ajouteEvenement(Glouglou);
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.EST));
         date++;
-        simulation.ajouteEvenement(Tribord);
-        date++;
-        simulation.ajouteEvenement(Tribord);
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.EST));
         date++;
         simulation.ajouteEvenement(Splash);
         date++;

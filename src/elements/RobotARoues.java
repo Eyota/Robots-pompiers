@@ -5,62 +5,57 @@
  */
 package elements;
 
-public class RobotARoues extends Robot{
-	
-	private final static int capacite=5000;
-	private final static double vitesse=80;
-	private final static int tempsRemplissage=10;
-	private final static double vitesseIntervention=25;
-	
-	public RobotARoues(Carte carte){
-		super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);
-	}
-	
-	
+public class RobotARoues extends Robot {
+
+    private final static int capacite = 5000;
+    private final static double vitesse = 80;
+    private final static int tempsRemplissage = 10;
+    private final static double vitesseIntervention = 25;
+
+    public RobotARoues(Carte carte) {
+        super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);
+    }
+
     @Override
     public void setPosition(Case C) {
-        try{
-        if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE) || (C.getNature() == NatureTerrain.FORET)) {
-            throw new WrongCaseNatureException();
-        } else {
-            while (C != super.position) {
+        try {
+            System.out.println(C.getNature().toString());
+            if ((C.getNature().equals(NatureTerrain.EAU)) || (C.getNature().equals(NatureTerrain.ROCHE)) || (C.getNature().equals(NatureTerrain.FORET))) {
+                throw new WrongCaseNatureException();
+            } else {
                 for (Case Voisin : map.ListeVoisins(super.position)) {
                     if (C.equals(Voisin)) {
                         System.out.println("Test");
                         super.position = C;
                     }
                 }
-                throw new UnreachableCaseException();
+                if (!super.position.equals(C)) {
+                    throw new UnreachableCaseException();
+                }
             }
 
+        } catch (UnreachableCaseException e) {
+            System.out.println("Roues : cette case ne peut pas être atteinte");
+        } catch (WrongCaseNatureException e) {
+            System.out.println("Roues : cette case n'a pas la bonne nature");
         }
-        }
-        catch (UnreachableCaseException e){
-            System.out.println("Le robot ne peut pas atteindre cette case car elle n'existe pas");
-        }
-        catch (WrongCaseNatureException e){
-            System.out.println("Cette case n'a pas la bonne nature");
-        }
-        
+
     }
 
     @Override
     public void setPositionInit(Case C) {
-        try{
-        if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE) || (C.getNature() == NatureTerrain.FORET)) {
-            throw new WrongCaseNatureException();
-        } else {
-            super.position = C;
-        }
-        }
-                
-        catch (WrongCaseNatureException e){
+        try {
+            if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE) || (C.getNature() == NatureTerrain.FORET)) {
+                throw new WrongCaseNatureException();
+            } else {
+                super.position = C;
+            }
+        } catch (WrongCaseNatureException e) {
             System.out.println("Cette case n'a pas la bonne nature");
         }
-        
+
     }
-    
-    
+
     @Override
     public double getVitesse(NatureTerrain T
     ) {
@@ -70,17 +65,15 @@ public class RobotARoues extends Robot{
             return 0;
         }
     }
-        
-        
-        @Override
-        public boolean peutRemplir(){  
-            for (Case Voisin : this.map.ListeVoisins(this.position)){ //Si la case est voisine de sa position
-                if (Voisin.getNature()==NatureTerrain.EAU){ //et qu'elle est composee d'eau
-                    return true;
-                }
+
+    @Override
+    public boolean peutRemplir() {
+        for (Case Voisin : this.map.ListeVoisins(this.position)) { //Si la case est voisine de sa position
+            if (Voisin.getNature() == NatureTerrain.EAU) { //et qu'elle est composee d'eau
+                return true;
             }
-            return false;
         }
+        return false;
+    }
 
 }
-

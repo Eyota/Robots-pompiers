@@ -89,7 +89,6 @@ public class LecteurDonnees {
             int nbLignes = scanner.nextInt();
             int nbColonnes = scanner.nextInt();
             int tailleCases = scanner.nextInt();	// en m
-            System.out.println("Carte : "+ nbLignes + "  " + nbColonnes + "\n");
             
             carte = new Carte(nbLignes, nbColonnes, tailleCases);
 
@@ -144,7 +143,7 @@ public class LecteurDonnees {
         ArrayList<Incendie> liste = new ArrayList();
         try {
             int nbIncendies = scanner.nextInt();
-            System.out.println("Nb d'incendies = " + nbIncendies);
+            //System.out.println("Nb d'incendies = " + nbIncendies);
             for (int i = 0; i < nbIncendies; i++) {
                 liste.add(lireIncendie(i, map));
             }
@@ -163,7 +162,7 @@ public class LecteurDonnees {
      */
     private static Incendie lireIncendie(int i, Carte map) throws DataFormatException {
         ignorerCommentaires();
-        System.out.print("Incendie " + i + ": ");
+        //System.out.print("Incendie " + i + ": ");
         Incendie incendie;
         try {
             int lig = scanner.nextInt();
@@ -213,7 +212,7 @@ public class LecteurDonnees {
      */
     private static Robot lireRobot(int i, Carte map) throws DataFormatException {
         ignorerCommentaires();
-        System.out.print("Robot " + i + ": ");
+        //System.out.print("Robot " + i + ": ");
         Robot monRobot;
 
         try {
@@ -243,15 +242,15 @@ public class LecteurDonnees {
             monRobot.setPositionInit(cases); 
             
             // lecture eventuelle d'une vitesse du robot (entier)
-            System.out.print(" vitesse = ");
+            //System.out.print(" vitesse = ");
             String s = scanner.findInLine("(\\d+)");	// 1 or more digit(s) ?
             // pour lire un flottant:    ("(\\d+(\\.\\d+)?)");
                 
             if (s == null) {
-                System.out.print("valeur par defaut  ");
+                //System.out.print("valeur par defaut  ");
             } else {
                 int vitesse = Integer.parseInt(s);
-                System.out.print(vitesse);
+                //System.out.print(vitesse);
                 monRobot.setVitesse(vitesse);
             }
             verifieLigneTerminee();

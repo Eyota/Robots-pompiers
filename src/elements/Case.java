@@ -38,4 +38,9 @@ public class Case {
             return false;
         }
 
+    @Override
+    public String toString() {
+        return "Case{" + "ligne=" + ligne + ", colonne=" + colonne + ", nature=" + nature + '}';
+    }       
+    
 }

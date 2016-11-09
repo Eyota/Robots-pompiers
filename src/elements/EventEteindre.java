@@ -6,13 +6,13 @@ public class EventEteindre extends Evenement{
     private Incendie fire;
     private Robot robot;
 
-    public EventEteindre (int date, Robot robot, Incendie fire){
+    public EventEteindre (int date, Robot robot, Incendie fire){        // EmptyTankException ??
       super(date);
       this.robot = robot;
       this.fire = fire;
     }
 
-    public void execute(){      //try déverser un volume correspondant à l'intensité ---> catch si pas assez d'eau on met à jour l'intensité
+    public void execute(){      
       //si le robot n'est pas sur la case de l'incendie
       if (this.robot.getPosition().equals((Object)this.fire.getPosition())){
         //exception Evenement impossible
@@ -20,7 +20,7 @@ public class EventEteindre extends Evenement{
 
       else{
         //si le robot peut eteindre l'incendie
-        try {
+
         if (this.fire.getIntensite() <= this.robot.getVolumeEau()){
           //on change la date
           super.date = super.date + this.robot.gettempsIntervention(this.fire.getIntensite());
@@ -38,10 +38,7 @@ public class EventEteindre extends Evenement{
           //on vide le reservoir
           this.robot.deverserEau(this.robot.getVolumeEau());
         }
-        }
-        catch (EmptyTankException e){
-            
-        }
+        
       }
 
     }

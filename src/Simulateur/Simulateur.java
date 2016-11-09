@@ -24,15 +24,17 @@ import java.util.zip.DataFormatException;
 public class Simulateur implements Simulable{
     private GUISimulator gui; 
     private DonneesSimulation data;
+    private Carte map;
     private String chemin;
     private List liste = new ArrayList<Evenement>();
     private long date;
     
     public Simulateur (String path){
         try {
-            this.chemin=path;
+        this.chemin=path;
+        this.date=0;
         this.data = LecteurDonnees.lire(path);
-        Carte map = this.data.getCarte();
+        this.map = this.data.getCarte();
         int taille = 80;               //map.getTailleCases();
         this.gui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
         Simulateur.drawMap(gui, map);
@@ -48,17 +50,18 @@ public class Simulateur implements Simulable{
         }
     }
 
-    public Simulateur() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public DonneesSimulation getData() {
         return data;
     }
-    
+
+    public GUISimulator getGui() {
+        return gui;
+    }  
+        
     @Override
     public void next() {
         Evenement enCours;
+        //if (this.date>0) 
         this.incrementeDate();
         if (!this.simulationTerminee()){
             enCours = (Evenement) this.liste.get(0); 
@@ -70,6 +73,7 @@ public class Simulateur implements Simulable{
                 }
                 else break;
             }
+            drawMap(this.gui, this.map);
             drawFire(this.gui, this.data.getIncendies());
             drawRobots(this.gui, this.data.getRobots());
         }
@@ -167,7 +171,7 @@ public class Simulateur implements Simulable{
             x=robot.getPosition().getLigne();
             y=robot.getPosition().getColonne();
             String type = robot.getClass().getName();
-            System.out.println(type);
+            //System.out.println(type);
             String path;
             switch (type){
                 case "elements.Drone" :

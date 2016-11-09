@@ -40,21 +40,20 @@ public class Scenario0{
         /*
         On lit le fichier carteSujet.map
         */
-        Simulateur simulation = new Simulateur("C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\carteSujet.map");
+        Simulateur simulation = new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
+        simulation.getGui().setSimulable(simulation);
         /*
         On déplace le robot au nord 4 fois de suite.
         */
-        Robot Buzz = simulation.getData().getRobots().get(1);
+        Robot Buzz = simulation.getData().getRobots().get(0);
         Carte Mappy = simulation.getData().getCarte();
-        for (int i=0;i<4;i++){
+        for (int i=1;i<5;i++){
             Evenement Monter= new EventDeplacer(i, Buzz, Direction.NORD);
             simulation.ajouteEvenement(Monter);
         }
         
         //tant que la liste n'est pas vide, on incrémente & on redessine la carte
-        while (!(simulation.simulationTerminee())){
-            
-        }
+       
         //normalement: throws exception sur setPosition
         
         

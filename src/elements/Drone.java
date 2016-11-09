@@ -17,18 +17,18 @@ public class Drone extends Robot{
     @Override
     public void setPosition(Case C) {
        try {
-        while (super.position != C) {
             for (Case voisin : map.ListeVoisins(super.position)) {
                 //Si la case est voisine de sa position
-                if (C == voisin) {
+                if (C.equals(voisin)) {
                     super.position = C;
                 }
             } 
-        throw new UnreachableCaseException();
-        }
+            if(!super.position.equals(C))
+                throw new UnreachableCaseException();
+            System.out.println("Drone moves to :" + C.toString());
         }
         catch (UnreachableCaseException e){
-            System.out.println("Cette case ne peut pas être atteinte");
+            System.out.println("Drone : cette case ne peut pas être atteinte");
         }
     }
     
