@@ -146,7 +146,7 @@ public class Simulateur implements Simulable{
                        couleurCase = Color.white;
                        break;
                 }
-                gui.addGraphicalElement(new Rectangle((i+1)*taille, (j+1)*taille, Color.black, couleurCase, taille));
+                gui.addGraphicalElement(new Rectangle((j+1)*taille, (i+1)*taille, Color.black, couleurCase, taille));
                 
             }
         }

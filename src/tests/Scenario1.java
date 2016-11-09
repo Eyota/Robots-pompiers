@@ -47,7 +47,7 @@ public class Scenario1 {
         Simulateur simulation= new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
         simulation.getGui().setSimulable(simulation);
         int date=1;
-        Robot WallE = simulation.getData().getRobots().get(0);
+        Robot WallE = simulation.getData().getRobots().get(1);
         Incendie petitFeu = simulation.getData().getIncendies().get(4);
         Carte Mappy = simulation.getData().getCarte();
                 
@@ -59,17 +59,17 @@ public class Scenario1 {
         Evenement Splash = new EventEteindre(date, WallE, petitFeu);
         
         //simulation
-        simulation.ajouteEvenement(new EventDeplacer(date, WallE, Direction.OUEST));
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE, Direction.EST));
         date++;
         simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.NORD));
         date++;
-        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.OUEST));
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.NORD));
         date++;
         simulation.ajouteEvenement(new EventRemplir(date, WallE));
         date++;
-        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.EST));
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.OUEST));
         date++;
-        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.EST));
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.SUD));
         date++;
         simulation.ajouteEvenement(Splash);
         date++;

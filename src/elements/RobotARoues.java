@@ -19,7 +19,7 @@ public class RobotARoues extends Robot {
     @Override
     public void setPosition(Case C) {
         try {
-            System.out.println(C.getNature().toString());
+            System.out.println(C.toString());
             if ((C.getNature().equals(NatureTerrain.EAU)) || (C.getNature().equals(NatureTerrain.ROCHE)) || (C.getNature().equals(NatureTerrain.FORET))) {
                 throw new WrongCaseNatureException();
             } else {
