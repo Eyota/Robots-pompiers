@@ -77,16 +77,20 @@ public class Simulateur implements Simulable{
             drawFire(this.gui, this.data.getIncendies());
             drawRobots(this.gui, this.data.getRobots());
         }
-        else System.out.println("Simulation terminée");
+        else{
+            System.out.println("Simulation terminée");
+            //throw new Exception rattrapée par ??
+        }
     }
 
     @Override
     public void restart() {
         try {
         this.data = LecteurDonnees.lire(this.chemin); 
-        Carte map = this.data.getCarte();
-        int taille = 80;               //map.getTailleCases();
-        this.gui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
+        this.map = this.data.getCarte();
+        this.date=0;
+        int taille = 80;               //map.getTailleCases()
+        this.liste= new ArrayList<Evenement>();
         drawMap(gui, map);
         drawFire(gui, this.data.getIncendies());
         drawRobots(gui, this.data.getRobots());  
@@ -157,9 +161,11 @@ public class Simulateur implements Simulable{
         int i, x, y;
         int taille = 80;
         for(Incendie incendie : ListeIncendies){
-            x=incendie.getPosition().getLigne();
-            y=incendie.getPosition().getColonne();
-            gui.addGraphicalElement(new Rectangle((y+1)*taille, (x+1)*taille, Color.red , Color.red , 50));
+            if (incendie.getIntensite()>0){
+                x=incendie.getPosition().getLigne();
+                y=incendie.getPosition().getColonne();
+                gui.addGraphicalElement(new Rectangle((y+1)*taille, (x+1)*taille, Color.red , Color.red , 50));
+            }
         }    
     }
     
@@ -170,28 +176,7 @@ public class Simulateur implements Simulable{
         for(Robot robot : ListeRobots){
             x=robot.getPosition().getLigne();
             y=robot.getPosition().getColonne();
-            String type = robot.getClass().getName();
-            //System.out.println(type);
-            String path;
-            switch (type){
-                case "elements.Drone" :
-                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\drone.png";
-                    break;
-                case "elements.RobotAChenilles" :
-                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\wall-e.png";
-                    break;
-                case "elements.RobotAPattes" :
-                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\pattes.png";
-                    break;               
-                case "elements.RobotARoues" :
-                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
-                    break; 
-                default :
-                    path = "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
-                    break; 
-            }                   
-            //gui.addGraphicalElement(new Rectangle((y+1)*taille, (x+1)*taille, Color.black , Color.DARK_GRAY , 50));
-            gui.addGraphicalElement(new ImageElement((y+1)*taille-30, (x+1)*taille-30, path , 60 , 60, null));
+            gui.addGraphicalElement(new ImageElement((y+1)*taille-30, (x+1)*taille-30, robot.getImage() , 60 , 60, null));
         }    
     }
 }

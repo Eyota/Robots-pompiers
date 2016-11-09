@@ -16,7 +16,7 @@ public class EventRemplir extends Evenement {
                 throw new CaseWithoutWaterException();
             } else {
                 //on considere que le reservoir est toujours vide
-
+                System.out.println("Remplissage du reservoir");
                 this.robot.remplirReservoir();
             }
         } catch (CaseWithoutWaterException c) {

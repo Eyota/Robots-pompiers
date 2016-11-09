@@ -62,6 +62,11 @@ public class RobotAChenilles extends Robot {
         }
 
     }
+    
+    @Override
+    public String getImage() {
+        return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\wall-e.png";
+    }
 
     @Override
     public boolean peutRemplir() {

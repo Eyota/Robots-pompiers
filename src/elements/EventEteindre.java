@@ -14,26 +14,26 @@ public class EventEteindre extends Evenement{
 
     public void execute(){      
       //si le robot n'est pas sur la case de l'incendie
-      if (this.robot.getPosition().equals((Object)this.fire.getPosition())){
+      if (!this.robot.getPosition().equals((Object)this.fire.getPosition())){
         //exception Evenement impossible
+          System.out.println("Il n'y a pas de feu a eteindre ici");
       }
 
       else{
         //si le robot peut eteindre l'incendie
 
         if (this.fire.getIntensite() <= this.robot.getVolumeEau()){
-          //on change la date
-          super.date = super.date + this.robot.gettempsIntervention(this.fire.getIntensite());
-          //on eteind le feu
+            System.out.println("Le robot eteint le feu");   
+//Il faut aussi retirer l'incendie de la liste !!! Autre solution : faire des tests sur incendie.intensite... Notamment pour le dessin
+          //on eteint le feu
           this.fire.setIntensite(0);
           //on vide le reservoir
           this.robot.deverserEau(this.fire.getIntensite());
         }
         //si le robot ne peux pas eteindre l'incendie
         if (this.fire.getIntensite() > this.robot.getVolumeEau()){
-          //on change la date
-          this.date = this.date + this.robot.gettempsIntervention(this.robot.getVolumeEau());
-          //on eteind le feu
+            System.out.println("Le robot ne peut pas competement eteindre le feu");
+          //on eteint le feu
           this.fire.setIntensite(this.fire.getIntensite() - this.robot.getVolumeEau());
           //on vide le reservoir
           this.robot.deverserEau(this.robot.getVolumeEau());

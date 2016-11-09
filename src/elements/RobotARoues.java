@@ -25,7 +25,6 @@ public class RobotARoues extends Robot {
             } else {
                 for (Case Voisin : map.ListeVoisins(super.position)) {
                     if (C.equals(Voisin)) {
-                        System.out.println("Test");
                         super.position = C;
                     }
                 }
@@ -64,6 +63,11 @@ public class RobotARoues extends Robot {
         } else {
             return 0;
         }
+    }
+    
+    @Override
+    public String getImage() {
+        return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
     }
 
     @Override

@@ -57,6 +57,11 @@ public class RobotAPattes extends Robot {
             return vitesse;
         }
     }
+    
+    @Override
+    public String getImage() {
+        return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\pattes.png";
+    }
 
     @Override
     public void deverserEau(double Volume) { //le robot a de la poudre dans le r�servoir, et donc un r�servoir infini

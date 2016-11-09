@@ -45,6 +45,8 @@ public abstract class Robot {
     }
 
     abstract public double getVitesse(NatureTerrain T);
+    
+    abstract public String getImage();
 
     abstract public void setPosition(Case C);
     

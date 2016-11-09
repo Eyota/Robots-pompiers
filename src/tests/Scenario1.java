@@ -47,7 +47,7 @@ public class Scenario1 {
         Simulateur simulation= new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
         simulation.getGui().setSimulable(simulation);
         int date=1;
-        Robot WallE = simulation.getData().getRobots().get(1);
+        Robot WallE = simulation.getData().getRobots().get(2);
         Incendie petitFeu = simulation.getData().getIncendies().get(4);
         Carte Mappy = simulation.getData().getCarte();
                 
@@ -58,8 +58,8 @@ public class Scenario1 {
         Evenement Glouglou = new EventRemplir(date, WallE);
         Evenement Splash = new EventEteindre(date, WallE, petitFeu);
         
-        //simulation
-        simulation.ajouteEvenement(new EventDeplacer(date, WallE, Direction.EST));
+        //simulation robot à roues
+        /*simulation.ajouteEvenement(new EventDeplacer(date, WallE, Direction.EST));
         date++;
         simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.NORD));
         date++;
@@ -71,10 +71,22 @@ public class Scenario1 {
         date++;
         simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.SUD));
         date++;
-        simulation.ajouteEvenement(Splash);
-        date++;
+        simulation.ajouteEvenement(new EventEteindre(date, WallE, petitFeu));
+        date*/
         
-        //normalement: incendie maîtrisé
+        //simulation robot à pattes
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE, Direction.OUEST));
+        date++;
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.OUEST));
+        date++;
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.SUD));
+        date++;
+        simulation.ajouteEvenement(new EventEteindre(date, WallE, petitFeu));
+        date++;
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.OUEST));
+        date++;
+        simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.SUD));
+        date++;
     }
 }
     

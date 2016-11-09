@@ -40,6 +40,11 @@ public class Drone extends Robot{
     public double getVitesse(NatureTerrain T) {
         return vitesse;
     }
+    
+    @Override
+    public String getImage() {
+        return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\drone.png";
+    }
 
     @Override
     public void remplirReservoir() {
@@ -55,5 +60,6 @@ public class Drone extends Robot{
         else
             return false;
         }
+
 
 }
