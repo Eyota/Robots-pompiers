@@ -44,7 +44,7 @@ public class RobotARoues extends Robot {
     @Override
     public void setPositionInit(Case C) {
         try {
-            if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE) || (C.getNature() == NatureTerrain.FORET)) {
+            if (!estAccessible(C)) {
                 throw new WrongCaseNatureException();
             } else {
                 super.position = C;
@@ -80,4 +80,14 @@ public class RobotARoues extends Robot {
         return false;
     }
 
+    @Override
+public boolean estAccessible(Case C){
+
+    if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE) || (C.getNature() == NatureTerrain.FORET)) {
+        //terrain inaccessible pour ce type de robot
+        return false;
+    } else {
+        return true;
+    }
+}
 }

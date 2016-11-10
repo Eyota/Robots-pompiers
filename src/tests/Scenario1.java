@@ -15,10 +15,13 @@ import elements.EventDeplacer;
 import elements.EventEteindre;
 import elements.EventRemplir;
 import elements.Incendie;
+import elements.PlusCourtChemin;
 import elements.Robot;
 import elements.RobotARoues;
+import elements.VoisinsDijsktra;
 import io.LecteurDonnees;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.zip.DataFormatException;
 
 /**
@@ -50,13 +53,19 @@ public class Scenario1 {
         Robot WallE = simulation.getData().getRobots().get(2);
         Incendie petitFeu = simulation.getData().getIncendies().get(4);
         Carte Mappy = simulation.getData().getCarte();
-                
         //création des évènements
-        Evenement Monter= new EventDeplacer(date, WallE, Direction.NORD);
+        /*Evenement Monter= new EventDeplacer(date, WallE, Direction.NORD);
         Evenement Babord= new EventDeplacer(date, WallE,  Direction.OUEST);
         Evenement Tribord= new EventDeplacer(date, WallE,  Direction.EST);
         Evenement Glouglou = new EventRemplir(date, WallE);
-        Evenement Splash = new EventEteindre(date, WallE, petitFeu);
+        Evenement Splash = new EventEteindre(date, WallE, petitFeu);*/
+        
+        //test + court chemin
+        System.out.println("Calcul chemin");
+        PlusCourtChemin way = new PlusCourtChemin(WallE, petitFeu.getPosition());
+        LinkedList<VoisinsDijsktra> chemin = way.getChemin();
+        System.out.println(chemin.toString());
+        
         
         //simulation robot à roues
         /*simulation.ajouteEvenement(new EventDeplacer(date, WallE, Direction.EST));
@@ -75,7 +84,7 @@ public class Scenario1 {
         date*/
         
         //simulation robot à pattes
-        simulation.ajouteEvenement(new EventDeplacer(date, WallE, Direction.OUEST));
+        /*simulation.ajouteEvenement(new EventDeplacer(date, WallE, Direction.OUEST));
         date++;
         simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.OUEST));
         date++;
@@ -86,7 +95,7 @@ public class Scenario1 {
         simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.OUEST));
         date++;
         simulation.ajouteEvenement(new EventDeplacer(date, WallE,  Direction.SUD));
-        date++;
+        date++;*/
     }
 }
     

@@ -82,4 +82,5 @@ public abstract class Robot {
     }
 
     public abstract boolean peutRemplir();
+    abstract public boolean estAccessible(Case C);
 }

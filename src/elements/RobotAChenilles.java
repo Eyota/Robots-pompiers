@@ -38,7 +38,7 @@ public class RobotAChenilles extends Robot {
     @Override
     public void setPositionInit(Case C) {
         try {
-            if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE)) {
+            if (!estAccessible(C)) {
                 //terrain inaccessible pour ce type de robot
                 throw new WrongCaseNatureException();
             } else {
@@ -76,6 +76,17 @@ public class RobotAChenilles extends Robot {
             }
         }
         return false;
+    }
+    
+    @Override
+    public boolean estAccessible(Case C){
+
+        if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE)) {
+            //terrain inaccessible pour ce type de robot
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

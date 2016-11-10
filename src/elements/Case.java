@@ -42,5 +42,27 @@ public class Case {
     public String toString() {
         return "Case{" + "ligne=" + ligne + ", colonne=" + colonne + ", nature=" + nature + '}';
     }       
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Case other = (Case) obj;
+        if (this.ligne != other.ligne) {
+            return false;
+        }
+        if (this.colonne != other.colonne) {
+            return false;
+        }
+        if (this.nature != other.nature) {
+            return false;
+        }
+        return true;
+    }
+    
     
 }

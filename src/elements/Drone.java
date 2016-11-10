@@ -60,6 +60,11 @@ public class Drone extends Robot{
         else
             return false;
         }
+    
+    @Override
+    public boolean estAccessible(Case C){
+       return true;
+    }
 
 
 }

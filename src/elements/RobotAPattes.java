@@ -36,7 +36,7 @@ public class RobotAPattes extends Robot {
     @Override
     public void setPositionInit(Case C) {
         try {
-            if (C.getNature() == NatureTerrain.EAU) {
+            if (!estAccessible(C)) {
                 throw new WrongCaseNatureException();
             } else {
                 super.position = C;
@@ -75,5 +75,15 @@ public class RobotAPattes extends Robot {
     public boolean peutRemplir() {
         return false;
     }
+    
+    @Override
+  public boolean estAccessible(Case C){
+      if (C.getNature() == NatureTerrain.EAU) {
+          //terrain inaccessible pour ce type de robot
+          return false;
+      } else {
+          return true;
+      }
+  }
 
 }
