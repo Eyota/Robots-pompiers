@@ -15,7 +15,7 @@ public class EventRemplir extends Evenement {
     public void execute() {
         try {
             //si le robot ne peut pas remplir
-            if (!this.robot.peutRemplir()) {
+            if (!this.robot.peutRemplir(this.robot.getPosition())) {
                 throw new CaseWithoutWaterException();
             } else {
                 //on considere que le reservoir est toujours vide

@@ -14,15 +14,21 @@ public class Drone extends Robot{
 	private final static int vitesseIntervention=10000/30;
 	
 	
-	public Drone(Carte carte) {
+    public Drone(Carte carte) {
 
         super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);
 
+    }
+    
+    @Override
+    public String toString() {
+        return "drone";
     }
 
     @Override
     public void setPosition(Case C) {
        try {
+            if(C.equals(this.getPosition())) return;
             for (Case voisin : map.ListeVoisins(super.position)) {
                 //Si la case est voisine de sa position
                 if (C.equals(voisin)) {
@@ -31,7 +37,6 @@ public class Drone extends Robot{
             } 
             if(!super.position.equals(C))
                 throw new UnreachableCaseException();
-            System.out.println("Drone moves to :" + C.toString());
         }
         catch (UnreachableCaseException e){
             System.out.println("Drone : cette case ne peut pas être atteinte");
@@ -62,16 +67,8 @@ public class Drone extends Robot{
         if (position.getNature() == NatureTerrain.EAU) { //S'il est plac� sur une case d'eau
             super.volumeEau = capacite;
         }
-    }
-        
-    @Override
-    public boolean peutRemplir(){
-        if (position.getNature() == NatureTerrain.EAU)
-            return true;
-        else
-            return false;
-        }
-    
+    }  
+       
     @Override
     public boolean estAccessible(Case C){
        return true;
@@ -79,11 +76,12 @@ public class Drone extends Robot{
 
     @Override
     public boolean peutRemplir(Case C) {
-        if (C.getNature() == NatureTerrain.EAU)
+        if (C.getNature().equals(NatureTerrain.EAU))
             return true;
         else
             return false;
-    }
+    }   
+    
 
    
 

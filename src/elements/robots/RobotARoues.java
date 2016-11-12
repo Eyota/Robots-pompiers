@@ -21,12 +21,17 @@ public class RobotARoues extends Robot {
     public RobotARoues(Carte carte) {
         super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);
     }
+    
+    @Override
+    public String toString() {
+        return "robot a roues";
+    }
 
     @Override
     public void setPosition(Case C) {
         try {
-            System.out.println(C.toString());
-            if ((C.getNature().equals(NatureTerrain.EAU)) || (C.getNature().equals(NatureTerrain.ROCHE)) || (C.getNature().equals(NatureTerrain.FORET))) {
+            if(C.equals(this.getPosition())) return;
+            if (!estAccessible(C)) {
                 throw new WrongCaseNatureException();
             } else {
                 for (Case Voisin : map.ListeVoisins(super.position)) {
@@ -75,21 +80,12 @@ public class RobotARoues extends Robot {
     public String getImage() {
         return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
     }
-
-    @Override
-    public boolean peutRemplir() {
-        for (Case Voisin : this.map.ListeVoisins(this.position)) { //Si la case est voisine de sa position
-            if (Voisin.getNature() == NatureTerrain.EAU) { //et qu'elle est composee d'eau
-                return true;
-            }
-        }
-        return false;
-    }
     
     @Override
     public boolean peutRemplir(Case C) {
         for (Case Voisin : this.map.ListeVoisins(C)) { //Si la case est voisine de sa position
-            if (Voisin.getNature() == NatureTerrain.EAU) { //et qu'elle est composee d'eau
+            //System.out.println(Voisin);
+            if (Voisin.getNature().equals(NatureTerrain.EAU)) { //et qu'elle est composee d'eau
                 return true;
             }
         }

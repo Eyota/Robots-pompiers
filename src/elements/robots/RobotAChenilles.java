@@ -16,11 +16,17 @@ public class RobotAChenilles extends Robot {
     public RobotAChenilles(Carte carte) {
         super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);
     }
+    
+    @Override
+    public String toString() {
+        return "robot a chenilles";
+    }
 
     @Override
     public void setPosition(Case C) {
         try {
-            if ((C.getNature() == NatureTerrain.EAU) || (C.getNature() == NatureTerrain.ROCHE)) {
+            if(C.equals(this.getPosition())) return;
+            if (!estAccessible(C)) {
                 //terrain inaccessible pour ce type de robot
                 throw new WrongCaseNatureException();
             } else {
@@ -74,20 +80,11 @@ public class RobotAChenilles extends Robot {
         return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\wall-e.png";
     }
 
-    @Override
-    public boolean peutRemplir() {
-        for (Case Voisin : this.map.ListeVoisins(this.position)) { //Si la case est voisine de sa position
-            if (Voisin.getNature() == NatureTerrain.EAU) { //et qu'elle est composee d'eau
-                return true;
-            }
-        }
-        return false;
-    }
     
     @Override
     public boolean peutRemplir(Case C) {
         for (Case Voisin : this.map.ListeVoisins(C)) { //Si la case est voisine de sa position
-            if (Voisin.getNature() == NatureTerrain.EAU) { //et qu'elle est composee d'eau
+            if (Voisin.getNature().equals(NatureTerrain.EAU)) { //et qu'elle est composee d'eau
                 return true;
             }
         }

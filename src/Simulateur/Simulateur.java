@@ -97,6 +97,7 @@ public class Simulateur implements Simulable{
         this.map = this.data.getCarte();
         this.date=0;      
         this.liste= new ArrayList<Evenement>();
+        this.master = new ChefPompier(this.data);
         drawMap(gui, map);
         drawFire(gui, this.data.getIncendies());
         drawRobots(gui, this.data.getRobots());  
@@ -116,7 +117,7 @@ public class Simulateur implements Simulable{
     }
     
     public void incrementeDate(){
-        this.date=this.date +1;
+        this.date=this.date +100;
     }
     
     public boolean simulationTerminee(){
@@ -177,7 +178,6 @@ public class Simulateur implements Simulable{
     
     public static void drawRobots(GUISimulator gui, ArrayList<Robot> ListeRobots){
         int  x, y;
-        
         int taille = 80;
         for(Robot robot : ListeRobots){
             x=robot.getPosition().getLigne();

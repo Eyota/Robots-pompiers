@@ -15,11 +15,17 @@ public class RobotAPattes extends Robot {
     public RobotAPattes(Carte carte) {
         super(carte, capacite, 0, vitesseIntervention, vitesse);
     }
+    
+    @Override
+    public String toString() {
+        return "robot a pattes";
+    }
 
     @Override
     public void setPosition(Case C) {
         try {
-            if (C.getNature() == NatureTerrain.EAU) {
+            if(C.equals(this.getPosition())) return;
+            if (!estAccessible(C)) {
                 throw new WrongCaseNatureException();
             } else {
                 for (Case Voisin : map.ListeVoisins(super.position)) {
@@ -77,11 +83,6 @@ public class RobotAPattes extends Robot {
     public void remplirReservoir() { //le robot a de la poudre dans le r�servoir, et donc un r�servoir infini
     }
 
-    @Override
-    public boolean peutRemplir() {
-        return false;
-    }
-    
     @Override
   public boolean estAccessible(Case C){
       if (C.getNature() == NatureTerrain.EAU) {

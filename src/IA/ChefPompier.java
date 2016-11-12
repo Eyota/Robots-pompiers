@@ -34,15 +34,15 @@ public class ChefPompier {
                 //Si le robot est libre et non plein, on l'eenvoie se remplir sur n'importe quelle case où il peut le faire
                 if(robot.estDisponible() && robot.getVolumeEau()<robot.getCapacite()){
                     Case eau = robot.getPtEau().get(0); 
+                    System.out.println("Le robot : " + robot.toString() +" va se remplir en : " + eau.toString());
                     courant = new PlusCourtChemin(robot, eau);
                     robot.setDisponible(false);
                     //ajouter evenement parcours
-                    
-                    simulateur.ajouteEvenement(null);       //remplacer par l'évènement de parcours du chemin
-                        //ajouter evenement eteindre à t + duree
-                        simulateur.ajouteEvenement(new EventRemplir(simulateur.getDate() + courant.getDuree(), robot));
-                        //ajouter evenement dispo à t + duree + ...
-                        simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + courant.getDuree() + robot.getTempsRemplissage(), robot));
+                    robot.deplacerRobot(simulateur, eau);
+                    //ajouter evenement eteindre à t + duree
+                    simulateur.ajouteEvenement(new EventRemplir(simulateur.getDate() + courant.getDuree(), robot));
+                    //ajouter evenement dispo à t + duree + ...
+                    simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + courant.getDuree() + robot.getTempsRemplissage(), robot));
                 }
             }
             // Pour chaque incendie, on cherche le robot libre le plus proche
@@ -55,9 +55,10 @@ public class ChefPompier {
                 //sinon : on prend le premier robot libre et qui peut se rendre sur la case de l'incendie
                 for (Robot robot : robots){
                     if(robot.estDisponible() && robot.estAccessible(inc.getPosition())){
+                        System.out.println("Le " + robot.toString() +" va eteindre en : " + inc.getPosition().toString());
                         robot.setDisponible(false);
                         courant = new PlusCourtChemin(robot, inc.getPosition());
-                        simulateur.ajouteEvenement(null);       //remplacer par l'évènement de parcours du chemin
+                        robot.deplacerRobot(simulateur, inc.getPosition());
                         //ajouter evenement eteindre à t + duree
                         simulateur.ajouteEvenement(new EventEteindre(simulateur.getDate() + courant.getDuree(), robot, inc));
                         //ajouter evenement dispo à t + duree + ...

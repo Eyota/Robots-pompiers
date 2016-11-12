@@ -40,7 +40,7 @@ public class Case {
 
     @Override
     public String toString() {
-        return "Case{" + "ligne=" + ligne + ", colonne=" + colonne + ", nature=" + nature + '}';
+        return "Case : " + ligne + ", " + colonne + ", " + nature;
     }       
 
     @Override
