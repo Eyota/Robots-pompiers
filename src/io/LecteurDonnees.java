@@ -92,8 +92,8 @@ public class LecteurDonnees {
             
             carte = new Carte(nbLignes, nbColonnes, tailleCases);
 
-            for (int lig = 0; lig < nbColonnes; lig++) {
-                for (int col = 0; col < nbLignes; col++) {
+            for (int lig = 0; lig < nbLignes; lig++) {
+                for (int col = 0; col < nbColonnes; col++) {
                     carte.setCase(lig, col, lireCase(lig, col));
                 }
             }

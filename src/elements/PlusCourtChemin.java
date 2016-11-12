@@ -12,160 +12,167 @@ import java.util.LinkedList;
  * @author Camille Gardelle
  */
 public class PlusCourtChemin {
+
     private LinkedList<VoisinsDijsktra> chemin;
     private Double duree;
-    
-    public PlusCourtChemin(Robot wizz, Case arrivee){
-        try{
-            System.out.println("Constructeur");
-            this.ImplementerChemin(dijsktra(structureDepart(wizz)), arrivee, wizz);
-            System.out.println("Chemin construit");
-        }
-        catch(UnreachableCaseException u){
+
+    public PlusCourtChemin(Robot wizz, Case arrivee) {
+        try {
+            if (arrivee.equals(wizz.getPosition())) {
+                this.duree = 0.0;
+                this.chemin = null;
+            } else {
+                this.chemin = new LinkedList<>();
+                this.ImplementerChemin(dijsktra(structureDepart(wizz)), arrivee, wizz);
+            }
+        } catch (UnreachableCaseException u) {
             System.out.println("Case inaccessible (plus court chemin)");
         }
     }
-    
-    private void ImplementerChemin(LinkedList<Maillon> tableau, Case dst, Robot wizz){
-       System.out.println("Début impémenter chemin");
-       Case precedente = new Case(dst.getLigne(), dst.getColonne(), dst.getNature());
-       for (Maillon m : tableau){
-           if (m.getCourant().equals(precedente)){ //on se met sur le maillon de la case a atteindre
-               this.duree = m.getDuree(); //on met la duree totale du chemin
+
+    private void ImplementerChemin(LinkedList<Maillon> tableau, Case dst, Robot wizz) {
+        //dans le cas ou le tableau n'existe pas
+        Case precedente = new Case(dst.getLigne(), dst.getColonne(), dst.getNature());
+        for (Maillon m : tableau) {
+            if (m.getCourant().equals(precedente)) { //on se met sur le maillon de la case a atteindre
+                this.duree = m.getDuree(); //on met la duree totale du chemin
             }
-        }   
-        while (!precedente.equals(wizz.position))//tant que la case precedente n'est pas celle du robot
+        }
+        int i;
+
+        while (precedente != null && !precedente.equals(wizz.position) )//tant que la case precedente n'est pas celle du robot
         {
-            for (Maillon m : tableau){
-                if (m.getCourant().equals(precedente)){ //on se met sur le maillon de la case a atteindre
+            i = 0;
+            for (Maillon m : tableau) {
+                if (i < 2 && m.getCourant().equals(precedente)) { //on se met sur le maillon de la case a atteindre
+                    i++;
                     this.ajouteChemin(m.getCourant(), m.getDuree());
                     precedente = m.getPere();
                 }
             }
         }
-        System.out.println("Fin impémenter chemin");
     }
-    
-    public LinkedList<VoisinsDijsktra> getChemin(){
+
+    public LinkedList<VoisinsDijsktra> getChemin() {
         return this.chemin;
     }
-    
-    public Double getDuree(){
+
+    public Double getDuree() {
         return this.duree;
     }
-    
-    
-    private void ajouteChemin(Case c, Double cout){
-        System.out.println("Ajoute chemin");
-       VoisinsDijsktra m = new VoisinsDijsktra(c, cout);
-       this.chemin.addFirst(m);//ajout en tete
-   }
-    
-   
-    
-    private void ajouteMaillon(LinkedList<Maillon> l, Case c){
-       Maillon m = new Maillon(c);
-       l.add(m);
+
+    private void ajouteChemin(Case c, Double cout) {
+        VoisinsDijsktra m = new VoisinsDijsktra(c, cout);
+        this.chemin.addFirst(m);//ajout en tete
     }
-           
-    
-    private LinkedList<Maillon> dijsktra(LinkedList<Maillon> tableau){
+
+    private void ajouteMaillon(LinkedList<Maillon> l, Case c) {
+        Maillon m = new Maillon(c);
+        l.add(m);
+    }
+
+    private LinkedList<Maillon> dijsktra(LinkedList<Maillon> tableau) {
         //jusqu'a ce que tous les Maillons aient ete traveses
-        System.out.println("Début dijkstra");
+        if (tableau.equals(null)) {
+            return null;
+        }
         Boolean vide = true;
-        int i=0;
-        for (Maillon r : tableau){
+        for (Maillon r : tableau) {
             vide = vide && r.getVisite();
         }
-        while (!vide)
-        {
+        VoisinsDijsktra minimum = new VoisinsDijsktra(tableau.get(0).getCourant());
+        while (!vide) {
             //on met le premier maillon en minimum, avec le cout max
-            VoisinsDijsktra minimum = new VoisinsDijsktra(tableau.get(0).getCourant());
+            minimum.setCoutV(2000000000.0);
             //on parcours la liste des maillons (le tableau) pour trouver le minimum en cout
-            for (Maillon m : tableau){
-                if (m.getDuree()<minimum.getCoutV()){
-                    minimum.setCoutV(m.getDuree());
-                    minimum.setDestination(m.getCourant());
+            for (Maillon m : tableau) {
+                if (!m.getVisite()) {
+                    if (m.getDuree() < minimum.getCoutV()) {
+                        minimum.setCoutV(m.getDuree());
+                        minimum.setDestination(m.getCourant());
+                    }
                 }
             }
-            //System.out.println("Fin premier for");
             //on prend la liste des voisins du maillon de cout minimum
-            for (Maillon m : tableau){
-                if (m.getCourant().equals(minimum.getDestinationV())){
+
+            for (Maillon m : tableau) {
+                if (m.getCourant().equals(minimum.getDestinationV())) {
                     //pour chaque voisin
-                    for (VoisinsDijsktra voisin : m.getListVoisins()){
-                        //rechercher le maillon destination
-                        for (Maillon dst : tableau){
-                            if (voisin.getDestinationV().equals(dst.getCourant())){
-                                //si celui_ci n'est pas sortie du tableau
-                                if(!dst.getVisite()){
-                                    //donc le maillon courant est m et le maillon destination est dst
-                                    //regarder si duree(courant) + distance < duree(destination)
-                                     if ((m.getDuree() + voisin.getCoutV()) < dst.getDuree()){
-                                    //dans ce cas changer
-                                    dst.setDuree(m.getDuree() + voisin.getCoutV());
-                                    dst.setPere(m.getCourant());
+                    if (m.getListVoisins() != null) {
+                        for (VoisinsDijsktra voisin : m.getListVoisins()) {
+                            //rechercher le maillon destination
+                            for (Maillon dst : tableau) {
+                                if (voisin.getDestinationV().equals(dst.getCourant())) {
+                                    //si celui_ci n'est pas sortie du tableau
+                                    if (!dst.getVisite()) {
+                                        //donc le maillon courant est m et le maillon destination est dst
+                                        //regarder si duree(courant) + distance < duree(destination)
+                                        if ((m.getDuree() + voisin.getCoutV()) < dst.getDuree()) {
+                                            //dans ce cas changer
+                                            dst.setDuree(m.getDuree() + voisin.getCoutV());
+                                            dst.setPere(m.getCourant());
+                                        }
                                     }
+
                                 }
-                            
-                                
                             }
                         }
                     }
-                //retirer courant du tableau
-                m.setVisite(true);
                 }
             }
-            i=0;
-            //System.out.println("Vide = true");
+
+            //retirer courant du tableau
+            for (Maillon m : tableau) {
+                if (m.getCourant().equals(minimum.getDestinationV())) {
+                    //pour chaque voisin
+                    m.setVisite(true);
+                }
+            }
+
             vide = true;
-            for (Maillon r : tableau){
+            for (Maillon r : tableau) {
                 vide = vide && r.getVisite();
             }
         }
         return tableau;
     }
-            
-            
-    private LinkedList<VoisinsDijsktra> ListeVoisinsD(Maillon a, Robot wizz) throws UnreachableCaseException{
+
+    private LinkedList<VoisinsDijsktra> ListeVoisinsD(Maillon a, Robot wizz) throws UnreachableCaseException {
         //obtenir la liste des voisins avec leur cout
         LinkedList<VoisinsDijsktra> voisins = new LinkedList<>();
-        
-        for (Direction dir : Direction.values()){
-            if(wizz.getMap().voisinExiste(a.getCourant(), dir)){
-                if (wizz.estAccessible(wizz.getMap().getVoisin(a.getCourant(), dir))){
-                    a.ajouteVoisin(voisins, wizz.getMap().getVoisin(a.getCourant(), dir), wizz.getMap().getTailleCases()/wizz.getVitesse(a.getCourant().getNature()));
+
+        for (Direction dir : Direction.values()) {
+            if (wizz.getMap().voisinExiste(a.getCourant(), dir)) {
+                if (wizz.estAccessible(wizz.getMap().getVoisin(a.getCourant(), dir))) {
+                    a.ajouteVoisin(voisins, wizz.getMap().getVoisin(a.getCourant(), dir), wizz.getMap().getTailleCases() / wizz.getVitesse(a.getCourant().getNature()));
                 }
             }
         }
         return voisins;
     }
-    
-    
-    
-    
-    private LinkedList<Maillon> structureDepart(Robot wizz) throws UnreachableCaseException{
+
+    private LinkedList<Maillon> structureDepart(Robot wizz) throws UnreachableCaseException {
         //initialisation de dijsktra : on met les sommets et la liste des voisins 
         LinkedList<Maillon> tableauD = new LinkedList<>();
-
-        //on cree une liste de Maillon initialises
-        for (int i = 0; i <= wizz.map.getNbLignes()-1; i++){
-            for (int j = 0; j <= wizz.map.getNbColonnes()-1; j++){
-                if (wizz.estAccessible(wizz.map.getCase(i, j))){
-                    ajouteMaillon(tableauD,wizz.map.getCase(i, j));
+        if (wizz.getMap() != null) {
+            //on cree une liste de Maillons initialises
+            for (int i = 0; i < wizz.map.getNbLignes(); i++) {
+                for (int j = 0; j < wizz.map.getNbColonnes(); j++) {
+                    if (wizz.estAccessible(wizz.map.getCase(i, j))) {
+                        ajouteMaillon(tableauD, wizz.map.getCase(i, j));
+                    }
+                }
+            }
+            //on cree la liste des voisin pour chaque maillon
+            for (Maillon a : tableauD) {
+                a.setListVoisins(ListeVoisinsD(a, wizz));
+                //on initialise le maillon src a 0
+                if (a.getCourant().equals(wizz.getPosition())) {
+                    a.setDuree((double) 0);
                 }
             }
         }
-        //on cree la liste des voisin pour chaque maillon
-        for (Maillon a : tableauD ) {
-            a.setListVoisins(ListeVoisinsD(a,wizz));
-            //on initialise le maillon src a 0
-            if (a.getCourant().equals(wizz.getPosition())){
-                a.setDuree((double)0);
-            }
-        }
-        System.out.println(tableauD.size());
-        return tableauD; 
+        return tableauD;
     }
-    
+
 }

@@ -50,8 +50,8 @@ public class Scenario1 {
         Simulateur simulation= new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
         simulation.getGui().setSimulable(simulation);
         int date=1;
-        Robot WallE = simulation.getData().getRobots().get(2);
-        Incendie petitFeu = simulation.getData().getIncendies().get(4);
+        Robot WallE = simulation.getData().getRobots().get(1);
+        Incendie petitFeu = simulation.getData().getIncendies().get(2);
         Carte Mappy = simulation.getData().getCarte();
         //création des évènements
         /*Evenement Monter= new EventDeplacer(date, WallE, Direction.NORD);
@@ -64,7 +64,9 @@ public class Scenario1 {
         System.out.println("Calcul chemin");
         PlusCourtChemin way = new PlusCourtChemin(WallE, petitFeu.getPosition());
         LinkedList<VoisinsDijsktra> chemin = way.getChemin();
-        System.out.println(chemin.toString());
+        for (VoisinsDijsktra a : chemin ){
+            System.out.println("case suivante: " + a.getDestinationV().getLigne() + "  " + a.getDestinationV().getColonne() + "  " + a.getCoutV());
+        }
         
         
         //simulation robot à roues
