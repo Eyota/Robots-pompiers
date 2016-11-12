@@ -9,7 +9,7 @@ import elements.WrongCaseNatureException;
 public class RobotAChenilles extends Robot {
 
     private final static int capacite = 2000;
-    private final static double vitesse = 60;
+    private final static int vitesse = 60;
     private final static int tempsRemplissage = 50;
     private final static double vitesseIntervention = 12.5;
 
@@ -57,7 +57,7 @@ public class RobotAChenilles extends Robot {
     }
 
     @Override
-    public double getVitesse(NatureTerrain T) {
+    public int getVitesse(NatureTerrain T) {
         if ((T == NatureTerrain.EAU) || (T == NatureTerrain.ROCHE)) {
             return 0;
         }
@@ -77,6 +77,16 @@ public class RobotAChenilles extends Robot {
     @Override
     public boolean peutRemplir() {
         for (Case Voisin : this.map.ListeVoisins(this.position)) { //Si la case est voisine de sa position
+            if (Voisin.getNature() == NatureTerrain.EAU) { //et qu'elle est composee d'eau
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean peutRemplir(Case C) {
+        for (Case Voisin : this.map.ListeVoisins(C)) { //Si la case est voisine de sa position
             if (Voisin.getNature() == NatureTerrain.EAU) { //et qu'elle est composee d'eau
                 return true;
             }

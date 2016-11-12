@@ -13,15 +13,15 @@ import java.util.List;
  */
 public class VoisinsDijsktra {
    private Case destination;
-   private Double cout;
+   private int cout;
    
     public VoisinsDijsktra(Case pe){
        this.destination = pe;
-       this.cout = 20000000.0;
+       this.cout = 20000000;
    }
    
    
-    public VoisinsDijsktra(Case pe, Double co){
+    public VoisinsDijsktra(Case pe, int co){
        this.destination = pe;
        this.cout = co;
    }
@@ -32,7 +32,7 @@ public class VoisinsDijsktra {
        return this.destination;
    }
    
-   public Double getCoutV(){
+   public int getCoutV(){
        return this.cout;
    }
     
@@ -40,7 +40,7 @@ public class VoisinsDijsktra {
        this.destination = per;
    }
    
-   public void setCoutV(Double c){
+   public void setCoutV(int c){
        this.cout = c;
    }
    

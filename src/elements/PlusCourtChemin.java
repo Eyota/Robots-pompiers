@@ -15,12 +15,12 @@ import java.util.LinkedList;
 public class PlusCourtChemin {
 
     private LinkedList<VoisinsDijsktra> chemin;
-    private Double duree;
+    private int duree;
 
     public PlusCourtChemin(Robot wizz, Case arrivee) {
         try {
             if (arrivee.equals(wizz.getPosition())) {
-                this.duree = 0.0;
+                this.duree = 0;
                 this.chemin = null;
             } else {
                 this.chemin = new LinkedList<>();
@@ -29,6 +29,10 @@ public class PlusCourtChemin {
         } catch (UnreachableCaseException u) {
             System.out.println("Case inaccessible (plus court chemin)");
         }
+    }
+    
+    public void setDuree(int duree){
+        this.duree=duree;
     }
 
     private void ImplementerChemin(LinkedList<Maillon> tableau, Case dst, Robot wizz) {
@@ -58,11 +62,11 @@ public class PlusCourtChemin {
         return this.chemin;
     }
 
-    public Double getDuree() {
+    public int getDuree() {
         return this.duree;
     }
 
-    private void ajouteChemin(Case c, Double cout) {
+    private void ajouteChemin(Case c, int cout) {
         VoisinsDijsktra m = new VoisinsDijsktra(c, cout);
         this.chemin.addFirst(m);//ajout en tete
     }
@@ -84,7 +88,7 @@ public class PlusCourtChemin {
         VoisinsDijsktra minimum = new VoisinsDijsktra(tableau.get(0).getCourant());
         while (!vide) {
             //on met le premier maillon en minimum, avec le cout max
-            minimum.setCoutV(2000000000.0);
+            minimum.setCoutV(2000000000);
             //on parcours la liste des maillons (le tableau) pour trouver le minimum en cout
             for (Maillon m : tableau) {
                 if (!m.getVisite()) {
@@ -145,7 +149,7 @@ public class PlusCourtChemin {
         for (Direction dir : Direction.values()) {
             if (wizz.getMap().voisinExiste(a.getCourant(), dir)) {
                 if (wizz.estAccessible(wizz.getMap().getVoisin(a.getCourant(), dir))) {
-                    a.ajouteVoisin(voisins, wizz.getMap().getVoisin(a.getCourant(), dir), wizz.getMap().getTailleCases() / wizz.getVitesse(a.getCourant().getNature()));
+                    a.ajouteVoisin(voisins, wizz.getMap().getVoisin(a.getCourant(), dir),(int) (wizz.getMap().getTailleCases() / wizz.getVitesse(a.getCourant().getNature())));
                 }
             }
         }
@@ -169,7 +173,7 @@ public class PlusCourtChemin {
                 a.setListVoisins(ListeVoisinsD(a, wizz));
                 //on initialise le maillon src a 0
                 if (a.getCourant().equals(wizz.getPosition())) {
-                    a.setDuree((double) 0);
+                    a.setDuree((int) 0);
                 }
             }
         }

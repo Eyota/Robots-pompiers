@@ -11,7 +11,7 @@ public class Drone extends Robot{
 	private final static int capacite=10000;
 	private final static int vitesse=100;
 	private final static int tempsRemplissage=30;
-	private final static double vitesseIntervention=10000/30;
+	private final static int vitesseIntervention=10000/30;
 	
 	
 	public Drone(Carte carte) {
@@ -43,7 +43,7 @@ public class Drone extends Robot{
     }
 
     @Override
-    public double getVitesse(NatureTerrain T) {
+    public int getVitesse(NatureTerrain T) {
         return vitesse;
     }
     
@@ -72,5 +72,14 @@ public class Drone extends Robot{
        return true;
     }
 
+    @Override
+    public boolean peutRemplir(Case C) {
+        if (C.getNature() == NatureTerrain.EAU)
+            return true;
+        else
+            return false;
+    }
+
+   
 
 }

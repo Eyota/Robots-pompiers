@@ -17,20 +17,20 @@ public class Maillon {
 
     private Case courant;
     private Case pere;
-    private Double dureechemin;
+    private int dureechemin;
     private Boolean visite;
     private LinkedList<VoisinsDijsktra> listVoisins = new LinkedList<>();
 
     
     public Maillon(Case c){
         this.courant = c;
-        this.dureechemin = 200000.0;
+        this.dureechemin = 200000;
         this.visite = false;
     }
     
     
     
-   public void ajouteVoisin(List<VoisinsDijsktra> l, Case c, Double cout){
+   public void ajouteVoisin(List<VoisinsDijsktra> l, Case c, int cout){
        VoisinsDijsktra m = new VoisinsDijsktra(c, cout);
        l.add(m);
    }
@@ -44,7 +44,7 @@ public class Maillon {
         return this.pere;
     }
 
-    public Double getDuree() {
+    public int getDuree() {
         return this.dureechemin;
     }
     
@@ -64,7 +64,7 @@ public class Maillon {
         this.pere = per;
     }
 
-    public void setDuree(Double d) {
+    public void setDuree(int d) {
         this.dureechemin = d;
     }
 

@@ -9,7 +9,7 @@ import elements.WrongCaseNatureException;
 public class RobotAPattes extends Robot {
 
     private final static int capacite = Integer.MAX_VALUE;
-    private final static double vitesse = 30;
+    private final static int vitesse = 30;
     private final static double vitesseIntervention = 10;
 
     public RobotAPattes(Carte carte) {
@@ -53,7 +53,7 @@ public class RobotAPattes extends Robot {
     }
 
     @Override
-    public double getVitesse(NatureTerrain T) {
+    public int getVitesse(NatureTerrain T) {
         if (T == NatureTerrain.EAU) {
             return 0;
         }
@@ -70,7 +70,7 @@ public class RobotAPattes extends Robot {
     }
 
     @Override
-    public void deverserEau(double Volume) { //le robot a de la poudre dans le r�servoir, et donc un r�servoir infini
+    public void deverserEau(int Volume) { //le robot a de la poudre dans le r�servoir, et donc un r�servoir infini
     }
 
     @Override
@@ -91,5 +91,10 @@ public class RobotAPattes extends Robot {
           return true;
       }
   }
+
+    @Override
+    public boolean peutRemplir(Case C) {
+        return false;
+    }
 
 }

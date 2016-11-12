@@ -1,6 +1,7 @@
 
 package Simulateur;
 
+import IA.ChefPompier;
 import elements.Carte;
 import elements.DonneesSimulation;
 import elements.events.Evenement;
@@ -27,7 +28,9 @@ public class Simulateur implements Simulable{
     private Carte map;
     private String chemin;
     private List liste = new ArrayList<Evenement>();
-    private long date;
+    private int date;
+    private int taille = 80;
+    private ChefPompier master;
     
     public Simulateur (String path){
         try {
@@ -35,7 +38,7 @@ public class Simulateur implements Simulable{
         this.date=0;
         this.data = LecteurDonnees.lire(path);
         this.map = this.data.getCarte();
-        int taille = 80;               //map.getTailleCases();
+        this.master = new ChefPompier(this.data);
         this.gui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
         Simulateur.drawMap(gui, map);
         Simulateur.drawFire(gui, this.data.getIncendies());
@@ -54,14 +57,18 @@ public class Simulateur implements Simulable{
         return data;
     }
 
+    public int getDate() {
+        return date;
+    }    
+
     public GUISimulator getGui() {
         return gui;
     }  
         
     @Override
     public void next() {
-        Evenement enCours;
-        //if (this.date>0) 
+        master.strategieElementaire(this);
+        Evenement enCours;        
         this.incrementeDate();
         if (!this.simulationTerminee()){
             enCours = (Evenement) this.liste.get(0); 
@@ -88,8 +95,7 @@ public class Simulateur implements Simulable{
         try {
         this.data = LecteurDonnees.lire(this.chemin); 
         this.map = this.data.getCarte();
-        this.date=0;
-        int taille = 80;               //map.getTailleCases()
+        this.date=0;      
         this.liste= new ArrayList<Evenement>();
         drawMap(gui, map);
         drawFire(gui, this.data.getIncendies());

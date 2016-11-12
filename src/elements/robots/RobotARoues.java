@@ -14,7 +14,7 @@ import elements.WrongCaseNatureException;
 public class RobotARoues extends Robot {
 
     private final static int capacite = 5000;
-    private final static double vitesse = 80;
+    private final static int vitesse = 80;
     private final static int tempsRemplissage = 10;
     private final static double vitesseIntervention = 25;
 
@@ -62,7 +62,7 @@ public class RobotARoues extends Robot {
     }
 
     @Override
-    public double getVitesse(NatureTerrain T
+    public int getVitesse(NatureTerrain T
     ) {
         if (T == (NatureTerrain.HABITAT) || (T == NatureTerrain.TERRAIN_LIBRE)) {
             return vitesse;
@@ -85,6 +85,16 @@ public class RobotARoues extends Robot {
         }
         return false;
     }
+    
+    @Override
+    public boolean peutRemplir(Case C) {
+        for (Case Voisin : this.map.ListeVoisins(C)) { //Si la case est voisine de sa position
+            if (Voisin.getNature() == NatureTerrain.EAU) { //et qu'elle est composee d'eau
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
 public boolean estAccessible(Case C){
@@ -96,4 +106,5 @@ public boolean estAccessible(Case C){
         return true;
     }
 }
+
 }

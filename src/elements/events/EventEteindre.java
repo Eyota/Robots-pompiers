@@ -27,11 +27,11 @@ public class EventEteindre extends Evenement{
 
         if (this.fire.getIntensite() <= this.robot.getVolumeEau()){
             System.out.println("Le robot eteint le feu");   
-//Il faut aussi retirer l'incendie de la liste !!! Autre solution : faire des tests sur incendie.intensite... Notamment pour le dessin
+            
           //on eteint le feu
           this.fire.setIntensite(0);
           //on vide le reservoir
-          this.robot.deverserEau(this.fire.getIntensite());
+          this.robot.deverserEau((int)this.fire.getIntensite());
         }
         //si le robot ne peux pas eteindre l'incendie
         if (this.fire.getIntensite() > this.robot.getVolumeEau()){
@@ -39,7 +39,7 @@ public class EventEteindre extends Evenement{
           //on eteint le feu
           this.fire.setIntensite(this.fire.getIntensite() - this.robot.getVolumeEau());
           //on vide le reservoir
-          this.robot.deverserEau(this.robot.getVolumeEau());
+          this.robot.deverserEau((int)this.robot.getVolumeEau());
         }
         
       }
