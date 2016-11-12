@@ -3,7 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package elements;
+package elements.robots;
+
+import elements.Carte;
+import elements.Case;
+import elements.NatureTerrain;
+import elements.UnreachableCaseException;
+import elements.WrongCaseNatureException;
 
 public class RobotARoues extends Robot {
 

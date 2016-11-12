@@ -5,6 +5,7 @@
  */
 package elements;
 
+import elements.robots.Robot;
 import java.util.LinkedList;
 
 /**
@@ -40,7 +41,7 @@ public class PlusCourtChemin {
         }
         int i;
 
-        while (precedente != null && !precedente.equals(wizz.position) )//tant que la case precedente n'est pas celle du robot
+        while (precedente != null && !precedente.equals(wizz.getPosition()) )//tant que la case precedente n'est pas celle du robot
         {
             i = 0;
             for (Maillon m : tableau) {
@@ -156,10 +157,10 @@ public class PlusCourtChemin {
         LinkedList<Maillon> tableauD = new LinkedList<>();
         if (wizz.getMap() != null) {
             //on cree une liste de Maillons initialises
-            for (int i = 0; i < wizz.map.getNbLignes(); i++) {
-                for (int j = 0; j < wizz.map.getNbColonnes(); j++) {
-                    if (wizz.estAccessible(wizz.map.getCase(i, j))) {
-                        ajouteMaillon(tableauD, wizz.map.getCase(i, j));
+            for (int i = 0; i < wizz.getMap().getNbLignes(); i++) {
+                for (int j = 0; j < wizz.getMap().getNbColonnes(); j++) {
+                    if (wizz.estAccessible(wizz.getMap().getCase(i, j))) {
+                        ajouteMaillon(tableauD, wizz.getMap().getCase(i, j));
                     }
                 }
             }

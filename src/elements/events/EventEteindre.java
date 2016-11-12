@@ -1,5 +1,8 @@
 
-package elements;
+package elements.events;
+
+import elements.Incendie;
+import elements.robots.Robot;
 
 
 public class EventEteindre extends Evenement{

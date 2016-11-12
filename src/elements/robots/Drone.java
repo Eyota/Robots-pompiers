@@ -1,5 +1,11 @@
 
-package elements;
+package elements.robots;
+
+import elements.Carte;
+import elements.Case;
+import elements.NatureTerrain;
+import elements.UnreachableCaseException;
+import elements.robots.Robot;
 
 public class Drone extends Robot{
 	private final static int capacite=10000;

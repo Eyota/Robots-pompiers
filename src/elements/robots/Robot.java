@@ -1,4 +1,9 @@
-package elements;
+package elements.robots;
+
+import elements.Carte;
+import elements.Case;
+import elements.CaseWithoutWaterException;
+import elements.NatureTerrain;
 
 public abstract class Robot {
 

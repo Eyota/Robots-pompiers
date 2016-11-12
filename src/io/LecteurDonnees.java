@@ -1,16 +1,16 @@
 package io;
 
 
-import elements.Drone;
+import elements.robots.Drone;
 import elements.DonneesSimulation;
-import elements.Robot;
+import elements.robots.Robot;
 import elements.Carte;
 import elements.Incendie;
 import elements.Case;
 import elements.NatureTerrain;
-import elements.RobotAChenilles;
-import elements.RobotAPattes;
-import elements.RobotARoues;
+import elements.robots.RobotAChenilles;
+import elements.robots.RobotAPattes;
+import elements.robots.RobotARoues;
 import elements.UnreachableCaseException;
 import elements.WrongCaseNatureException;
 import java.io.*;
@@ -246,12 +246,15 @@ public class LecteurDonnees {
             String s = scanner.findInLine("(\\d+)");	// 1 or more digit(s) ?
             // pour lire un flottant:    ("(\\d+(\\.\\d+)?)");
                 
-            if (s == null) {
-                //System.out.print("valeur par defaut  ");
-            } else {
+            if (s != null) {
                 int vitesse = Integer.parseInt(s);
-                //System.out.print(vitesse);
-                monRobot.setVitesse(vitesse);
+                if (type == "DRONE" && vitesse>150){
+                    monRobot.setVitesse(150);
+                }
+                else if (type == "CHENILLES" && vitesse>80){
+                    monRobot.setVitesse(80);
+                }    
+                else monRobot.setVitesse(vitesse);
             }
             verifieLigneTerminee();
 

@@ -1,6 +1,15 @@
 
-package elements;
+package tests;
 
+import elements.Carte;
+import elements.Carte;
+import elements.DonneesSimulation;
+import elements.DonneesSimulation;
+import elements.Incendie;
+import elements.Incendie;
+import elements.NatureTerrain;
+import elements.NatureTerrain;
+import elements.robots.Robot;
 import gui.GUISimulator;
 import gui.ImageElement;
 import gui.Rectangle;

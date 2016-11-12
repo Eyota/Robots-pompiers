@@ -3,12 +3,12 @@ package Simulateur;
 
 import elements.Carte;
 import elements.DonneesSimulation;
-import elements.Evenement;
+import elements.events.Evenement;
 import elements.Incendie;
 import elements.NatureTerrain;
-import elements.Robot;
-import static elements.TestPart1.drawFire;
-import static elements.TestPart1.drawRobots;
+import elements.robots.Robot;
+import static tests.TestPart1.drawFire;
+import static tests.TestPart1.drawRobots;
 import gui.GUISimulator;
 import gui.ImageElement;
 import gui.Rectangle;

@@ -5,6 +5,7 @@
  */
 package elements;
 
+import elements.robots.RobotAChenilles;
 import static elements.NatureTerrain.EAU;
 import static elements.NatureTerrain.FORET;
 import static elements.NatureTerrain.HABITAT;

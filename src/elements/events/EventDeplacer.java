@@ -1,4 +1,9 @@
-package elements;
+package elements.events;
+
+import elements.Case;
+import elements.Direction;
+import elements.UnreachableCaseException;
+import elements.robots.Robot;
 
 public class EventDeplacer extends Evenement {
     private Case destination;

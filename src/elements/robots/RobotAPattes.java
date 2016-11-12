@@ -1,4 +1,10 @@
-package elements;
+package elements.robots;
+
+import elements.Carte;
+import elements.Case;
+import elements.NatureTerrain;
+import elements.UnreachableCaseException;
+import elements.WrongCaseNatureException;
 
 public class RobotAPattes extends Robot {
 

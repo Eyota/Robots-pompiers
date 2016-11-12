@@ -1,5 +1,5 @@
 
-package elements;
+package elements.events;
 
 public abstract class Evenement implements Comparable<Evenement> {
     protected double date;
