@@ -9,8 +9,8 @@ import elements.WrongCaseNatureException;
 public class RobotAChenilles extends Robot {
 
     private final static int capacite = 2000;
-    private final static int vitesse = 60;
-    private final static int tempsRemplissage = 50;
+    private final static double vitesse = 60;
+    private final static int tempsRemplissage = 5*60;
     private final static double vitesseIntervention = 12.5;
 
     public RobotAChenilles(Carte carte) {
@@ -57,7 +57,7 @@ public class RobotAChenilles extends Robot {
     }
 
     @Override
-    public int getVitesse(NatureTerrain T) {
+    public double getVitesse(NatureTerrain T) {
         if ((T == NatureTerrain.EAU) || (T == NatureTerrain.ROCHE)) {
             return 0;
         }

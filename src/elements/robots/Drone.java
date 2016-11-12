@@ -10,7 +10,7 @@ import elements.robots.Robot;
 public class Drone extends Robot{
 	private final static int capacite=10000;
 	private final static int vitesse=100;
-	private final static int tempsRemplissage=30;
+	private final static int tempsRemplissage=30*60;
 	private final static int vitesseIntervention=10000/30;
 	
 	
@@ -43,7 +43,7 @@ public class Drone extends Robot{
     }
 
     @Override
-    public int getVitesse(NatureTerrain T) {
+    public double getVitesse(NatureTerrain T) {
         return vitesse;
     }
     
@@ -52,6 +52,11 @@ public class Drone extends Robot{
         return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\drone.png";
     }
 
+    @Override
+    public void deverserEau(int volume){
+        this.volumeEau=0;
+    }
+    
     @Override
     public void remplirReservoir() {
         if (position.getNature() == NatureTerrain.EAU) { //S'il est plac� sur une case d'eau

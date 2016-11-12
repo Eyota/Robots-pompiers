@@ -14,11 +14,11 @@ public abstract class Robot {
     private int capacite; //en litres
     private int tempsRemplissage; //en s
     private double vitesseIntervention; // en L/s
-    private int vitesse; // en km/h. 
+    private double vitesse; // en km/h. 
     private boolean disponible = true;
     private ArrayList<Case> ptEau;
 
-    protected Robot(Carte carte, int cap, int tpsRemplissage, double vtIntervention, int vit) {
+    protected Robot(Carte carte, int cap, int tpsRemplissage, double vtIntervention, double vit) {
         this.map = carte;
         this.volumeEau = cap;
         this.capacite = cap;
@@ -52,7 +52,7 @@ public abstract class Robot {
         return (int) (Volume / vitesseIntervention);
     }
 
-    abstract public int getVitesse(NatureTerrain T);
+    abstract public double getVitesse(NatureTerrain T);
 
     abstract public String getImage();
 
