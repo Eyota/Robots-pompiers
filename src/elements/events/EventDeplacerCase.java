@@ -18,10 +18,12 @@ public class EventDeplacerCase extends Evenement {
 
     public void execute() {
         try {
-            if (Case.sontVoisines(robot.getPosition(), destination)){
-                this.robot.setPosition(this.destination);
+            for (Direction dir : Direction.values()) {
+                if (destination.equals(robot.getMap().getVoisin(robot.getPosition(),dir))) {
+                    this.robot.setPosition(this.destination);
+                }
             }
-            else throw new UnreachableCaseException();
+            throw new UnreachableCaseException();
 
         } catch (UnreachableCaseException e) {
             System.out.println("Ces cases ne sont pas voisines (eventDeplacerCase)");
