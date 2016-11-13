@@ -14,6 +14,7 @@ public class TestIA {
     private static void testIA() throws FileNotFoundException, DataFormatException{
     Simulateur simulation= new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
     simulation.getGui().setSimulable(simulation);
+    simulation.setTaille(80);
     }
          
 }

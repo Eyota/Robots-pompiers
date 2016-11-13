@@ -40,9 +40,9 @@ public class Simulateur implements Simulable{
         this.map = this.data.getCarte();
         this.master = new ChefPompier(this.data);
         this.gui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
-        Simulateur.drawMap(gui, map);
-        Simulateur.drawFire(gui, this.data.getIncendies());
-        Simulateur.drawRobots(gui, this.data.getRobots());   
+        Simulateur.drawMap(gui, map, taille);
+        Simulateur.drawFire(gui, this.data.getIncendies(), taille);
+        Simulateur.drawRobots(gui, this.data.getRobots(), taille);   
         }
         catch (FileNotFoundException e){
             System.out.println("Le fichier spécifié n'existe pas");
@@ -51,6 +51,10 @@ public class Simulateur implements Simulable{
         catch (DataFormatException d){
             System.out.println("Le fichier spécifié n'a pas le bon format");
         }
+    }
+
+    public void setTaille(int taille) {
+        this.taille = taille;
     }
 
     public DonneesSimulation getData() {
@@ -80,9 +84,9 @@ public class Simulateur implements Simulable{
                 }
                 else break;
             }
-            drawMap(this.gui, this.map);
-            drawFire(this.gui, this.data.getIncendies());
-            drawRobots(this.gui, this.data.getRobots());
+            drawMap(this.gui, this.map, taille);
+            drawFire(this.gui, this.data.getIncendies(), taille);
+            drawRobots(this.gui, this.data.getRobots(), taille);
         }
         else{
             System.out.println("Simulation terminée");
@@ -98,9 +102,9 @@ public class Simulateur implements Simulable{
         this.date=0;      
         this.liste= new ArrayList<Evenement>();
         this.master = new ChefPompier(this.data);
-        drawMap(gui, map);
-        drawFire(gui, this.data.getIncendies());
-        drawRobots(gui, this.data.getRobots());  
+        drawMap(gui, map, taille);
+        drawFire(gui, this.data.getIncendies(), taille);
+        drawRobots(gui, this.data.getRobots(), taille);  
         }
         catch (FileNotFoundException e){
             System.out.println("Le fichier spécifié n'existe pas");
@@ -127,9 +131,8 @@ public class Simulateur implements Simulable{
         return false;
     }  
     
-    private static void drawMap(GUISimulator gui, Carte map){       //Ou faire une classe Draw ??
+    private static void drawMap(GUISimulator gui, Carte map, int taille){       //Ou faire une classe Draw ??
         int i,j;
-        int taille = 80;        //map.getTailleCases();
         NatureTerrain type;
         Color couleurCase;
         //Dessiner la map
@@ -164,9 +167,8 @@ public class Simulateur implements Simulable{
     
     }
     
-    public static void drawFire(GUISimulator gui, ArrayList<Incendie> ListeIncendies){
+    public static void drawFire(GUISimulator gui, ArrayList<Incendie> ListeIncendies, int taille){
         int i, x, y;
-        int taille = 80;
         for(Incendie incendie : ListeIncendies){
             if (incendie.getIntensite()>0){
                 x=incendie.getPosition().getLigne();
@@ -176,9 +178,8 @@ public class Simulateur implements Simulable{
         }    
     }
     
-    public static void drawRobots(GUISimulator gui, ArrayList<Robot> ListeRobots){
+    public static void drawRobots(GUISimulator gui, ArrayList<Robot> ListeRobots, int taille){
         int  x, y;
-        int taille = 80;
         for(Robot robot : ListeRobots){
             x=robot.getPosition().getLigne();
             y=robot.getPosition().getColonne();

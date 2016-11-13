@@ -11,7 +11,7 @@ public class Drone extends Robot{
 	private final static int capacite=10000;
 	private final static int vitesse=100;
 	private final static int tempsRemplissage=30*60;
-	private final static int vitesseIntervention=10000/30;
+	private final static int vitesseIntervention=100;
 	
 	
     public Drone(Carte carte) {
@@ -52,10 +52,14 @@ public class Drone extends Robot{
         return vitesse*0.28;
     }
     
+    public int gettempsIntervention(int Volume) {
+        return 30;
+    }
+    
     @Override
     public String getImage() {
-        //return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\drone.png";
-        return "C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\drone.png";
+        return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\drone.png";
+        //return "C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\drone.png";
     }
 
     @Override

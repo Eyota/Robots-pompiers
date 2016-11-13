@@ -33,7 +33,7 @@ public class EventEteindre extends Evenement{
           //on vide le reservoir
           this.robot.deverserEau((int)this.fire.getIntensite());
         }
-        //si le robot ne peux pas eteindre l'incendie
+        //si le robot ne peut pas eteindre l'incendie
         if (this.fire.getIntensite() > this.robot.getVolumeEau()){
             System.out.println("Le robot ne peut pas competement eteindre le feu");
           //on eteint le feu

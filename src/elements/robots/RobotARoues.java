@@ -78,8 +78,8 @@ public class RobotARoues extends Robot {
     
     @Override
     public String getImage() {
-        //return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
-        return "C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\roues.png";
+        return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
+        //return "C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\roues.png";
     }
     
     @Override

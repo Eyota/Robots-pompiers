@@ -62,7 +62,12 @@ public class ChefPompier {
                         //ajouter evenement eteindre à t + duree
                         simulateur.ajouteEvenement(new EventEteindre(simulateur.getDate() + courant.getDuree(), robot, inc));
                         //ajouter evenement dispo à t + duree + ...
-                        simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + courant.getDuree() + robot.gettempsIntervention((int)robot.getVolumeEau()), robot));
+                        if (robot.toString().equals("robot a pattes")){
+                            simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + courant.getDuree() + robot.gettempsIntervention((int)inc.getIntensite()), robot));
+                        }
+                        else{
+                            simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + courant.getDuree() + robot.gettempsIntervention((int)robot.getVolumeEau()), robot));
+                        }
                         break;  //Si on trouve un robot libre, on ne demande pas aux autres
                     }
                 }
