@@ -1,47 +1,33 @@
 package elements;
 
-
 public class Case {
-	private int ligne;
-	private int colonne;
-	private NatureTerrain nature;
-  
-	public Case (int lig, int col, NatureTerrain nat){
-		this.ligne=lig;
-		this.colonne=col;
-		this.nature=nat;
-	}
 
-	public int getLigne(){
-		return this.ligne;
-	}
+    private int ligne;
+    private int colonne;
+    private NatureTerrain nature;
 
-	public int getColonne(){
-		return this.colonne;
-	}
+    public Case(int lig, int col, NatureTerrain nat) {
+        this.ligne = lig;
+        this.colonne = col;
+        this.nature = nat;
+    }
 
-	public NatureTerrain getNature(){
-		return this.nature;
-	}
-        
-        public static boolean sontVoisines(Case src, Case news){         //??????
-            double difCol;
-            double difLig;
+    public int getLigne() {
+        return this.ligne;
+    }
 
-            difLig = src.getLigne() - news.getLigne();
-            difCol = src.getColonne() - news.getColonne();
+    public int getColonne() {
+        return this.colonne;
+    }
 
-            if(difCol==-1 || difCol==0 || difCol==1){
-                if(difLig==-1 || difLig==0 || difLig==1)
-                    return true;
-            }
-            return false;
-        }
+    public NatureTerrain getNature() {
+        return this.nature;
+    }
 
     @Override
     public String toString() {
         return "Case : " + ligne + ", " + colonne + ", " + nature;
-    }       
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -63,6 +49,5 @@ public class Case {
         }
         return true;
     }
-    
-    
+
 }
