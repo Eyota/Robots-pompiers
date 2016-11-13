@@ -1,12 +1,14 @@
-
 package elements.events;
 
 import elements.Case;
 import elements.Direction;
 import elements.UnreachableCaseException;
 import elements.robots.Robot;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EventDeplacerCase extends Evenement {
+
     private Case destination;
     private Robot robot;
 
@@ -17,17 +19,7 @@ public class EventDeplacerCase extends Evenement {
     }
 
     public void execute() {
-        try {
-            for (Direction dir : Direction.values()) {
-                if (destination.equals(robot.getMap().getVoisin(robot.getPosition(),dir))) {
-                    this.robot.setPosition(this.destination);
-                }
-            }
-            throw new UnreachableCaseException();
-
-        } catch (UnreachableCaseException e) {
-            System.out.println("Ces cases ne sont pas voisines (eventDeplacerCase)");
-        }
+        this.robot.setPosition(this.destination);
     }
 
 }
