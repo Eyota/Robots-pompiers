@@ -68,16 +68,17 @@ public class RobotAChenilles extends Robot {
             return 0;
         }
         if (T == NatureTerrain.FORET) {
-            return vitesse / 2;
+            return (vitesse / 2)*0.28;
         } else {
-            return vitesse;
+            return vitesse*0.28;
         }
 
     }
     
     @Override
     public String getImage() {
-        return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\wall-e.png";
+        //return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\wall-e.png";
+        return "C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\wall-e.png";
     }
 
     

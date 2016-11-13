@@ -70,7 +70,7 @@ public class RobotARoues extends Robot {
     public double getVitesse(NatureTerrain T
     ) {
         if (T == (NatureTerrain.HABITAT) || (T == NatureTerrain.TERRAIN_LIBRE)) {
-            return vitesse;
+            return vitesse*0.28;
         } else {
             return 0;
         }
@@ -78,7 +78,8 @@ public class RobotARoues extends Robot {
     
     @Override
     public String getImage() {
-        return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
+        //return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\roues.png";
+        return "C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\roues.png";
     }
     
     @Override
