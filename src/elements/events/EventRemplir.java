@@ -7,6 +7,12 @@ public class EventRemplir extends Evenement {
 
     private Robot robot;
 
+    /**
+     * Creation de l'évènement qui remplit le réservoir du robot
+     *
+     * @param date date de l'évènement
+     * @param robot robot dont le réservoir doit être rempli
+     */
     public EventRemplir(int date, Robot robot) {
         super(date);
         this.robot = robot;

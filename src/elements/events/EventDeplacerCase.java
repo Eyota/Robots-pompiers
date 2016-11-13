@@ -12,6 +12,13 @@ public class EventDeplacerCase extends Evenement {
     private Case destination;
     private Robot robot;
 
+    /**
+     * Créer l'évènement qui déplace le robot d'une case.
+     *
+     * @param date date de l'évènement
+     * @param robot robot à déplacer
+     * @param dest case sur laquelle déplacer le robot
+     */
     public EventDeplacerCase(int date, Robot robot, Case dest) {
         super(date);
         this.robot = robot;
