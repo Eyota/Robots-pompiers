@@ -19,6 +19,7 @@ import static tests.TestPart1.drawRobots;
 import gui.GUISimulator;
 import io.LecteurDonnees;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.zip.DataFormatException;
@@ -42,7 +43,7 @@ public class Scenario0 {
         /*
          On lit le fichier carteSujet.map
          */
-        Simulateur simulation = new Simulateur(".\\cartes\\carteSujet.map");
+        Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map");
         simulation.getGui().setSimulable(simulation);
         /*
          On déplace le robot au nord 4 fois de suite.

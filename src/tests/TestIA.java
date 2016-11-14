@@ -1,6 +1,7 @@
 package tests;
 
 import Simulateur.Simulateur;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.zip.DataFormatException;
 
@@ -11,10 +12,7 @@ public class TestIA {
     }
 
     private static void testIA() throws FileNotFoundException, DataFormatException {
-        Simulateur simulation = new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
-        simulation.getGui().setSimulable(simulation);
-        simulation.setTaille(80);
-
+        Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map");
     }
 
 }

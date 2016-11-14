@@ -18,6 +18,7 @@ import elements.PlusCourtChemin;
 import elements.robots.Robot;
 import elements.robots.RobotAChenilles;
 import elements.VoisinsDijsktra;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.zip.DataFormatException;
 
@@ -28,7 +29,7 @@ import java.util.zip.DataFormatException;
 public class TestDi {
     public static void main(String args[]) {
         
-        Simulateur simulation= new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteTestDi.map");
+        Simulateur simulation= new Simulateur("." + File.separator + "cartes" + File.separator + "carteTestDi.map");
         simulation.getGui().setSimulable(simulation);
         Robot Almo = simulation.getData().getRobots().get(0);
         Incendie petitFeu = simulation.getData().getIncendies().get(0);

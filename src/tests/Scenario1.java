@@ -10,6 +10,7 @@ import elements.events.EventDeplacer;
 import elements.events.EventEteindre;
 import elements.events.EventRemplir;
 import elements.robots.Robot;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.zip.DataFormatException;
@@ -34,7 +35,7 @@ public class Scenario1 {    //Une fois le chef pompier implémenté, ce test ne 
         /*
          On lit le fichier carteSujet.map
          */
-        Simulateur simulation = new Simulateur(".\\cartes\\carteSujet.map");
+        Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map");
         simulation.getGui().setSimulable(simulation);
         int date = 1;
         Robot WallE = simulation.getData().getRobots().get(1);

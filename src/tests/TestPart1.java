@@ -15,13 +15,14 @@ import gui.ImageElement;
 import gui.Rectangle;
 import io.LecteurDonnees;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.zip.DataFormatException;
 
 public class TestPart1 {
     public static void main(String args[]) throws FileNotFoundException, DataFormatException{
-        DonneesSimulation donnees = LecteurDonnees.lire("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
+        DonneesSimulation donnees = LecteurDonnees.lire("." + File.separator + "cartes" + File.separator + "carteSujet.map");
         Carte map = donnees.getCarte();
         int taille = 80;               //map.getTailleCases();
         GUISimulator ui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond

@@ -42,6 +42,7 @@ public class Simulateur implements Simulable{
         this.map = this.data.getCarte();
         this.master = new ChefPompier(this.data);
         this.gui = new GUISimulator(map.getNbColonnes()*taille+80, map.getNbLignes()*taille+80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
+        this.gui.setSimulable(this);
         Simulateur.drawMap(gui, map, taille);
         Simulateur.drawFire(gui, this.data.getIncendies(), taille);
         Simulateur.drawRobots(gui, this.data.getRobots(), taille);   
@@ -53,10 +54,6 @@ public class Simulateur implements Simulable{
         catch (DataFormatException d){
             System.out.println("Le fichier spécifié n'a pas le bon format");
         }
-    }
-
-    public void setTaille(int taille) {
-        this.taille = taille;
     }
 
     public DonneesSimulation getData() {

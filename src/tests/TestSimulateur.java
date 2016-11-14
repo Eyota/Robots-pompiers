@@ -6,6 +6,7 @@
 package tests;
 
 import Simulateur.Simulateur;
+import java.io.File;
 
 /**
  *
@@ -13,6 +14,6 @@ import Simulateur.Simulateur;
  */
 public class TestSimulateur {
     public static void main(String args[]){
-        Simulateur simu = new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
+        Simulateur simu = new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map");
     }
 }
