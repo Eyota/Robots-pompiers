@@ -68,7 +68,7 @@ public class Simulateur implements Simulable {
 
     @Override
     public void next() {
-        master.strategieEvoluee(this);
+        master.strategie2(this);
         Evenement enCours;
         this.incrementeDate();
         if (!this.simulationTerminee()) {

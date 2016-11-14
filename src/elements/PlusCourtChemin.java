@@ -23,11 +23,11 @@ public class PlusCourtChemin {
      */
     public PlusCourtChemin(Robot wizz, Case arrivee) {
         try {
+            this.chemin = new LinkedList<>();
             if (arrivee.equals(wizz.getPosition())) {
-                this.duree = 0;
-                this.chemin = null;
+                this.duree = 0;                
+                this.chemin.add(new VoisinsDijsktra(arrivee, 0));
             } else {
-                this.chemin = new LinkedList<>();
                 this.ImplementerChemin(dijsktra(structureDepart(wizz)), arrivee, wizz);
             }
         } catch (UnreachableCaseException u) {
