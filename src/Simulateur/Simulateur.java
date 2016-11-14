@@ -168,7 +168,7 @@ public class Simulateur implements Simulable {
         int i, j;
         NatureTerrain type;
         Color couleurCase;
-        //Dessiner la map
+        //Dessiner la carte
 
         for (i = 0; i < map.getNbLignes(); i++) {
             for (j = 0; j < map.getNbColonnes(); j++) {
@@ -200,7 +200,12 @@ public class Simulateur implements Simulable {
 
     }
 
-    
+    /**
+     * Dessine les incendies aux coordonnées correspondantes sur la carte
+     * @param gui
+     * @param ListeIncendies
+     * @param taille 
+     */
     public static void drawFire(GUISimulator gui, ArrayList<Incendie> ListeIncendies, int taille) {
         int i, x, y;
         for (Incendie incendie : ListeIncendies) {
@@ -212,6 +217,12 @@ public class Simulateur implements Simulable {
         }
     }
 
+    /**
+     * Dessine les robots aux coordonnées correspondantes sur la carte
+     * @param gui
+     * @param ListeRobots
+     * @param taille 
+     */
     public static void drawRobots(GUISimulator gui, ArrayList<Robot> ListeRobots, int taille) {
         int x, y;
         for (Robot robot : ListeRobots) {
