@@ -9,13 +9,6 @@ public class DonneesSimulation {
     private Carte carte;
     private ArrayList<Incendie> incendies;
     private ArrayList<Robot> robots;
-
-    /*public DonneesSimulation(Carte map, List<Incendie> listeFeux, List<Robot> listeRobots){
-     this.carte = map;
-     this.incendies = listeFeux;
-     this.robots = listeRobots;
-     }*/
-    
     
     public void setCarte(Carte carte) {
         this.carte = carte;

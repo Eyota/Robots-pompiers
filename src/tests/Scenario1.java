@@ -11,7 +11,7 @@ import elements.Direction;
 import elements.DonneesSimulation;
 import elements.robots.Drone;
 import elements.events.Evenement;
-import elements.events.EventDeplacer;
+import elements.events.EventDeplacer;   //A été remplacé par un évènement qui prend une case en paramètre pour les besoins de l'IA
 import elements.events.EventEteindre;
 import elements.events.EventRemplir;
 import elements.Incendie;

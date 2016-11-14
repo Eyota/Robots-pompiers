@@ -32,6 +32,10 @@ public class Simulateur implements Simulable{
     private int taille = 80;
     private ChefPompier master;
     
+    /**
+     * 
+     * @param path 
+     */
     public Simulateur (String path){
         try {
         this.chemin=path;

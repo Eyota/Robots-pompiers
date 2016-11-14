@@ -9,8 +9,9 @@ import elements.NatureTerrain;
 import elements.PlusCourtChemin;
 import elements.UnreachableCaseException;
 import elements.VoisinsDijsktra;
-import elements.events.EventDeplacer;
+import elements.WrongCaseNatureException;
 import elements.events.EventDeplacerCase;
+import java.io.File;
 import java.util.ArrayList;
 
 public abstract class Robot {
@@ -24,7 +25,7 @@ public abstract class Robot {
     private double vitesse; // en km/h. 
     private boolean disponible = true;
     private ArrayList<Case> ptEau;
-    private PlusCourtChemin chemin;
+    protected String pictureFolder = "." + File.separator + "pictures" + File.separator;
 
     /**
      * Construit l'objet Robot à partir de plusieurs paramètres
@@ -120,14 +121,48 @@ public abstract class Robot {
      *
      * @param C case à atteindre
      */
-    abstract public void setPosition(Case C);
+    public void setPosition(Case C) {
+        try {
+            if (C.equals(this.getPosition())) {
+                return;
+            }
+            if (!estAccessible(C)) {
+                //terrain inaccessible pour ce type de robot
+                throw new WrongCaseNatureException();
+            } else {
+                for (Case Voisin : map.ListeVoisins(this.position)) {
+                    if (C.equals(Voisin)) {
+                        this.position = C;
+                    }
+                }
+                if (!this.position.equals(C)) {
+                    throw new UnreachableCaseException();
+                }
+
+            }
+        } catch (UnreachableCaseException e) {
+            System.out.println("Cette case ne peut pas être atteinte");
+        } catch (WrongCaseNatureException e) {
+            System.out.println("Cette case n'a pas la bonne nature");
+        }
+    }
 
     /**
      * définir la position initiale du robot
      *
      * @param C case : position initiale
      */
-    abstract public void setPositionInit(Case C);
+    public void setPositionInit(Case C) {
+        try {
+            if (!estAccessible(C)) {
+                throw new WrongCaseNatureException();
+            } else {
+                this.position = C;
+            }
+        } catch (WrongCaseNatureException e) {
+            System.out.println("Cette case n'a pas la bonne nature");
+        }
+    }
 
     /**
      * Définir la vitesse: utilisé par le lecteur de données
@@ -200,17 +235,17 @@ public abstract class Robot {
     }
 
     /**
+     * Méthode permettant d'ajouter au simulateur les évenements de déplacement
+     * aux bonnes dates pour que le robot suive le plus court chemin
      *
      * @param simu
      * @param dst
      */
-    public void deplacerRobot(Simulateur simu, Case dst) {   //Pas très optimisé car le chef le calcule déjà...
-        //on cherche le plus court chemin
-        this.chemin = new PlusCourtChemin(this, dst);
+    public void deplacerRobot(Simulateur simu, PlusCourtChemin chemin) {
         //on initialise le temps de deplacement a 0
         int coutPrecedent = 0;
 
-        for (VoisinsDijsktra a : this.chemin.getChemin()) {
+        for (VoisinsDijsktra a : chemin.getChemin()) {
             //la date de l'evenement est la date du simulateur ajoutee a la date du maillon precedent
             //(date de fin de l'evenement precedent)
             simu.ajouteEvenement(new EventDeplacerCase(simu.getDate() + coutPrecedent, this, a.getDestinationV()));

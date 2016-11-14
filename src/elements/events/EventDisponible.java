@@ -8,7 +8,7 @@ public class EventDisponible extends Evenement {
     private Robot robot;
 
     /**
-     * Crée l'évènement qui indique la disponibilité du robot
+     * Crée l'évènement rend le robot disponible
      *
      * @param date date de l'évènement
      * @param robot robot en question

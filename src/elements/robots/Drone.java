@@ -26,28 +26,6 @@ public class Drone extends Robot{
     }
 
     @Override
-    public void setPosition(Case C) {
-       try {
-            if(C.equals(this.getPosition())) return;
-            for (Case voisin : map.ListeVoisins(super.position)) {
-                //Si la case est voisine de sa position
-                if (C.equals(voisin)) {
-                    super.position = C;
-                }
-            } 
-            if(!super.position.equals(C))
-                throw new UnreachableCaseException();
-        }
-        catch (UnreachableCaseException e){
-            System.out.println("Drone : cette case ne peut pas être atteinte");
-        }
-    }
-    
-    public void setPositionInit(Case C) {
-        super.position = C;
-    }
-
-    @Override
     public double getVitesse(NatureTerrain T) {
         return vitesse*0.28;
     }
@@ -58,8 +36,7 @@ public class Drone extends Robot{
     
     @Override
     public String getImage() {
-        return "C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\drone.png";
-        //return "C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\drone.png";
+        return super.pictureFolder + "drone.png";
     }
 
     @Override
@@ -69,7 +46,7 @@ public class Drone extends Robot{
     
     @Override
     public void remplirReservoir() {
-        if (position.getNature() == NatureTerrain.EAU) { //S'il est plac� sur une case d'eau
+        if (position.getNature() == NatureTerrain.EAU) { //S'il est placé sur une case d'eau
             super.volumeEau = capacite;
         }
     }  
