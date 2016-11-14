@@ -4,11 +4,23 @@ package elements;
 import elements.robots.Robot;
 import java.util.LinkedList;
 
+/**
+ * Calcul de plus court chemin utilise par un robot pour determiner
+ * le chemin a parcourir pour atteindre une case
+ */
+
 public class PlusCourtChemin {
 
     private LinkedList<VoisinsDijsktra> chemin;
     private int duree;
 
+     /**
+     * Constructeur : construit la liste des cases a traverser par wizz 
+     * pour arriver sur la case arrivee
+     *
+     * @param wizz robot qui demande le chemin
+     * @param arrivee case sur laquelle on veut se rendre
+     */
     public PlusCourtChemin(Robot wizz, Case arrivee) {
         try {
             if (arrivee.equals(wizz.getPosition())) {
@@ -23,10 +35,20 @@ public class PlusCourtChemin {
         }
     }
     
-    public void setDuree(int duree){
+    /**
+     * implémente le champs duree
+     * @param duree la durée du chemin totale
+     */
+    private void setDuree(int duree){
         this.duree=duree;
     }
 
+    /**
+    * Construit le chemin
+     * @param tableau le tableau de Dijskra consrtuit à partir de wizz
+     * @param dst la case de destination du chemin
+     * @param wizz le robot qui va se déplacer
+     */
     private void ImplementerChemin(LinkedList<Maillon> tableau, Case dst, Robot wizz) {
         //dans le cas ou le tableau n'existe pas
         Case precedente = new Case(dst.getLigne(), dst.getColonne(), dst.getNature());
@@ -50,24 +72,45 @@ public class PlusCourtChemin {
         }
     }
 
+    /**
+     * retourne le chemin
+     */
     public LinkedList<VoisinsDijsktra> getChemin() {
         return this.chemin;
     }
 
+    /**
+     * retourne la duree du chemin
+     */
     public int getDuree() {
         return this.duree;
     }
 
+     /**
+      * ajoute une case dans le chemin 
+      * @param c la case
+      * @param cout le temps de parcours de la case
+      */
     private void ajouteChemin(Case c, int cout) {
         VoisinsDijsktra m = new VoisinsDijsktra(c, cout);
         this.chemin.addFirst(m);//ajout en tete
     }
 
+     /**
+      * ajoute un maillon dans le tableau Dijsktra à initialiser
+      * @param l le tableau de Dijsktra
+      * @param c la case du maillon à ajouter
+      */
     private void ajouteMaillon(LinkedList<Maillon> l, Case c) {
         Maillon m = new Maillon(c);
         l.add(m);
     }
 
+    /**
+     * Effectue Dijsktra sur le tableau initialisé
+     * @param tableau le tableau initialisé
+     * @return le tableau Dijsktra
+     */
     private LinkedList<Maillon> dijsktra(LinkedList<Maillon> tableau) {
         //jusqu'a ce que tous les Maillons aient ete traveses
         if (tableau.equals(null)) {
@@ -134,6 +177,13 @@ public class PlusCourtChemin {
         return tableau;
     }
 
+    /**
+     * Construit la liste des voisins d'une case, contenue dans un maillon
+     * @param a le maillon du tableau à initialisé
+     * @param wizz le robot qui parcours le chemin
+     * @return la liste des voisins du maillon
+     * @throws UnreachableCaseException 
+     */
     private LinkedList<VoisinsDijsktra> ListeVoisinsD(Maillon a, Robot wizz) throws UnreachableCaseException {
         //obtenir la liste des voisins avec leur cout
         LinkedList<VoisinsDijsktra> voisins = new LinkedList<>();
@@ -148,6 +198,13 @@ public class PlusCourtChemin {
         return voisins;
     }
 
+    
+    /**
+     * Contruit le tableau Dijsktra initialisé correspondant à la carte d'un robot
+     * @param wizz le robot qui va parcourir le chemin qu'on cherche
+     * @return le tableau Dijsktra initialisé
+     * @throws UnreachableCaseException 
+     */
     private LinkedList<Maillon> structureDepart(Robot wizz) throws UnreachableCaseException {
         //initialisation de dijsktra : on met les sommets et la liste des voisins 
         LinkedList<Maillon> tableauD = new LinkedList<>();
