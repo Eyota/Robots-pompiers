@@ -26,7 +26,9 @@ public class EventDeplacerCase extends Evenement {
     }
 
     public void execute() {
+        System.out.println(robot.toString()+ " va en " + destination);
         this.robot.setPosition(this.destination);
+        
     }
 
 }

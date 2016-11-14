@@ -22,7 +22,7 @@ public class EventDeplacer extends Evenement {
             this.robot.setPosition(this.destination);
 
         } catch (UnreachableCaseException e) {
-            //System.out.println("Cette case n'existe pas");
+            System.out.println("Cette case n'existe pas");
         }
     }
 

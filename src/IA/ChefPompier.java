@@ -85,31 +85,38 @@ public class ChefPompier {
         double dureeRemplissage = 100000;
         PlusCourtChemin cheminMin;
         PlusCourtChemin courant;
-
+        //System.out.println("Début test remplissage");
         for (Robot robot : robots) {
+            //System.out.println(robot + " début");
             dureeRemplissage = 100000;
-            //Si le robot est libre et vide, on l'eenvoie se remplir vers la case la plus proche
+            //Si le robot est libre et vide, on l'envoie se remplir vers la case la plus proche
             if (robot.estDisponible() && robot.getVolumeEau() == 0) {
                 //il peut aller le remplir à la case la plus proche
                 PlusCourtChemin eauOptimal = null;
+                System.out.println(robot.getPtEau().size());
                 for (Case eau : robot.getPtEau()) {
+                    System.out.println(eau);
                     courant = new PlusCourtChemin(robot, eau);
                     if (courant.getDuree() <= dureeRemplissage) {
+                        System.out.println(courant.getDuree());
                         dureeRemplissage = courant.getDuree();
                         eauOptimal = courant;
                     }
-                    robot.setDisponible(false);
-                    //le robot se déplace vers la case d'eau le plus proche
-                    System.out.println("Le robot : " + robot.toString() + " va se remplir en : " + eau.toString());
-                    robot.deplacerRobot(simulateur, eauOptimal);
-                    //il se remplit à cette case
-                    simulateur.ajouteEvenement(new EventRemplir(simulateur.getDate() + eauOptimal.getDuree(), robot));
-                    simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + eauOptimal.getDuree() + robot.getTempsRemplissage(), robot));
+                    System.out.println("case suivante");
                 }
+                robot.setDisponible(false);
+                //le robot se déplace vers la case d'eau le plus proche
+                System.out.println("Le " + robot.toString() + " va se remplir en " + eauOptimal.getChemin().getLast().getDestinationV());
+                robot.deplacerRobot(simulateur, eauOptimal);
+                //il se remplit à cette case
+                simulateur.ajouteEvenement(new EventRemplir(simulateur.getDate() + eauOptimal.getDuree(), robot));
+                simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + eauOptimal.getDuree() + robot.getTempsRemplissage(), robot));
+
             }
         }
 
         // Pour chaque incendie, on cherche le robot libre le plus proche
+        //System.out.println("Début test incendies");
         for (Incendie inc : incendies) {
             Robot robotOptimal = null;
             duree = 1000000;
@@ -118,30 +125,32 @@ public class ChefPompier {
             for (Robot robot : robots) {
 
                 if (robot.estDisponible()) {
+                    System.out.println(robot);
                     courant = new PlusCourtChemin(robot, inc.getPosition());
                     if (courant.getDuree() <= duree) {
+                        System.out.println("Robot optimal =" + robot);
                         cheminMin = courant;
                         duree = courant.getDuree();
-                        robotOptimal = robot; //est-ce que je crée un autre robot en faisant ça ?
+                        robotOptimal = robot;
                     }
 
                 }
             }
-            robotOptimal.setDisponible(false);
-            System.out.println("Le " + robotOptimal.toString() + " va eteindre en : " + inc.getPosition().toString());
-            System.out.println("Le " + robotOptimal.toString() + robotOptimal.estDisponible());
-            robotOptimal.deplacerRobot(simulateur, cheminMin);
-            if (inc.getIntensite() == 0) {
-                simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate(), robotOptimal));
-                incendies.remove(inc);
-                break;
-            } else { // si l'incendie n'est pas éteint quand il est arrivé
-                simulateur.ajouteEvenement(new EventEteindre(simulateur.getDate() + (int) duree, robotOptimal, inc));
+            if (robotOptimal != null) {
+                robotOptimal.setDisponible(false);
+                System.out.println("Le " + robotOptimal.toString() + " va eteindre en : " + inc.getPosition().toString());
+                System.out.println("Le " + robotOptimal.toString() + robotOptimal.estDisponible());
+                robotOptimal.deplacerRobot(simulateur, cheminMin);
+                /*if (inc.getIntensite() == 0) {
+                 simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate(), robotOptimal));
+                 incendies.remove(inc);
+                 break;
+                 } else { // si l'incendie n'est pas éteint quand il est arrivé*/
+                simulateur.ajouteEvenement(new EventEteindre(simulateur.getDate() + cheminMin.getDuree(), robotOptimal, inc));
+                System.out.println(simulateur.getDate() + cheminMin.getDuree() + robotOptimal.gettempsIntervention((int) min(inc.getIntensite(), robotOptimal.getVolumeEau())));
                 simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + cheminMin.getDuree() + robotOptimal.gettempsIntervention((int) min(inc.getIntensite(), robotOptimal.getVolumeEau())), robotOptimal));
+                //}
             }
-
-            //ne pas oublier de réinitialiser la duree!!! et robot disponible
-            robotOptimal.setDisponible(true);
         }
     }
 }

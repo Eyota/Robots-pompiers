@@ -46,7 +46,7 @@ public class RobotARoues extends Robot {
     public boolean peutRemplir(Case C) {
         for (Case Voisin : this.map.listeVoisins(C)) { //Si la case est voisine de sa position
             //System.out.println(Voisin);
-            if (Voisin.getNature().equals(NatureTerrain.EAU)) { //et qu'elle est composee d'eau
+            if (Voisin.getNature().equals(NatureTerrain.EAU) == true && C.getNature().equals(NatureTerrain.EAU) == false) { //et qu'elle est composee d'eau
                 return true;
             }
         }

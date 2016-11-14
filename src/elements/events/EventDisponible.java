@@ -20,5 +20,6 @@ public class EventDisponible extends Evenement {
 
     public void execute() {
         robot.setDisponible(true);
+        System.out.println(robot.toString()+ " est disponible");
     }
 }
