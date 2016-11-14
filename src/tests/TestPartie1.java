@@ -30,7 +30,7 @@ public class TestPartie1 {
         Map.setCase(1, 2, Case12);
         Map.setCase(2, 4, Case24);
         System.out.println(Map.voisinExiste(Case22, Direction.NORD));
-        System.out.println(Map.ListeVoisins(Case22).toString());
+        System.out.println(Map.listeVoisins(Case22).toString());
         
         //Test sur le lecteur de données
         

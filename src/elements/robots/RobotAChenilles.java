@@ -42,7 +42,7 @@ public class RobotAChenilles extends Robot {
 
     @Override
     public boolean peutRemplir(Case C) {
-        for (Case Voisin : this.map.ListeVoisins(C)) { //Si la case est voisine de sa position
+        for (Case Voisin : this.map.listeVoisins(C)) { //Si la case est voisine de sa position
             if (Voisin.getNature().equals(NatureTerrain.EAU)) { //et qu'elle est composee d'eau
                 return true;
             }

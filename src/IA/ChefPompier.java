@@ -26,22 +26,26 @@ public class ChefPompier {
         this.map = data.getCarte();
     }
 
+    /**
+     * Implémente la stratégie élémentaire du chef pompier : le premier robot disponible va éteindre le premier feu trouvé
+     * @param simulateur 
+     */
     public void strategieElementaire(Simulateur simulateur) {
         PlusCourtChemin courant;
-        //Tant que tous les incendies ne sont pas eteints
         //Pour chaque robot, s'il est vide on l'envoie chercher de l'eau
         for (Robot robot : robots) {
-            //Si le robot est libre et non plein, on l'eenvoie se remplir sur n'importe quelle case où il peut le faire
+            //Si le robot est libre et non plein, on l'envoie se remplir sur n'importe quelle case où il peut le faire
             if (robot.estDisponible() && robot.getVolumeEau() < robot.getCapacite()) {
                 Case eau = robot.getPtEau().get(0);
                 System.out.println("Le robot : " + robot.toString() + " va se remplir en : " + eau.toString());
                 courant = new PlusCourtChemin(robot, eau);
+                //Le robot devient indisponible
                 robot.setDisponible(false);
-                //ajouter evenement parcours
-                robot.deplacerRobot(simulateur, eau);
+                //envoyer le robot suivre le chemin calculé
+                robot.deplacerRobot(simulateur, courant);
                 //ajouter evenement eteindre à t + duree
                 simulateur.ajouteEvenement(new EventRemplir(simulateur.getDate() + courant.getDuree(), robot));
-                //ajouter evenement dispo à t + duree + ...
+                //rendre le robot diponible après son remplissage
                 simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + courant.getDuree() + robot.getTempsRemplissage(), robot));
             }
         }
@@ -56,12 +60,14 @@ public class ChefPompier {
             for (Robot robot : robots) {
                 if (robot.estDisponible() && robot.estAccessible(inc.getPosition())) {
                     System.out.println("Le " + robot.toString() + " va eteindre en : " + inc.getPosition().toString());
+                    //le robot est indisponible
                     robot.setDisponible(false);
                     courant = new PlusCourtChemin(robot, inc.getPosition());
-                    robot.deplacerRobot(simulateur, inc.getPosition());
-                    //ajouter evenement eteindre à t + duree
+                    //envoyer le robot suivre le chemin calculé
+                    robot.deplacerRobot(simulateur, courant);
+                    //ajouter evenement eteindre à t + duree deplacement
                     simulateur.ajouteEvenement(new EventEteindre(simulateur.getDate() + courant.getDuree(), robot, inc));
-                    //ajouter evenement dispo à t + duree + ...
+                    //le robot redevient disponible à la fin de son intervention (nb : pour caculer le temps d'intervention on prend le volume d'eau porté par le robot, sauf pour le robot à pattes dont le réservoir est infini)
                     if (robot.toString().equals("robot a pattes")) {
                         simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + courant.getDuree() + robot.gettempsIntervention((int) inc.getIntensite()), robot));
                     } else {
@@ -94,7 +100,7 @@ public class ChefPompier {
                     }
 
                     //le robot se déplace vers la case d'eau le plus proche
-                    robot.deplacerRobot(simulateur, eauOptimal);
+                    //robot.deplacerRobot(simulateur, eauOptimal);
                     //il se remplit à cette case
 
                     simulateur.ajouteEvenement(new EventRemplir(simulateur.getDate() + courant.getDuree(), robot));
@@ -119,7 +125,7 @@ public class ChefPompier {
                 }
             }
             robotOptimal.setDisponible(false);
-            robotOptimal.deplacerRobot(simulateur, inc.getPosition());
+            robotOptimal.deplacerRobot(simulateur, courant);
             if (inc.getIntensite() == 0) {
                 incendies.remove(inc);
                 break;

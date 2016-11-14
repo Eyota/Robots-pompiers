@@ -130,7 +130,7 @@ public abstract class Robot {
                 //terrain inaccessible pour ce type de robot
                 throw new WrongCaseNatureException();
             } else {
-                for (Case Voisin : map.ListeVoisins(this.position)) {
+                for (Case Voisin : map.listeVoisins(this.position)) {
                     if (C.equals(Voisin)) {
                         this.position = C;
                     }
@@ -203,7 +203,6 @@ public abstract class Robot {
             this.volumeEau = this.volumeEau - Volume; //On diminue la quantit� d'eau dans le r�servoir
         } else {
             this.volumeEau = 0;
-            //throw new EmptyTankException();
         }
     }
 
@@ -218,8 +217,8 @@ public abstract class Robot {
     }
 
     /**
-     * @return liste chaînée contenant les cases d'eau voisines de la position
-     * du robot
+     * @return liste chaînée contenant les cases sur lesquelles le robot peut se
+     * remplir
      */
     public ArrayList<Case> cherchePointsDEau() {
         int i, j;

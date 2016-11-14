@@ -29,33 +29,30 @@ import java.util.zip.DataFormatException;
  */
 
 /*
-Déplacer le 1er robot (drone) vers le nord, quatre fois de suite.
-Erreur : le robot est sorti de la carte.
-*/
-public class Scenario0{
-    public static void main(String[] args) throws FileNotFoundException, DataFormatException{
+ Déplacer le 1er robot (drone) vers le nord, quatre fois de suite.
+ Erreur : le robot est sorti de la carte.
+ */
+public class Scenario0 {
+
+    public static void main(String[] args) throws FileNotFoundException, DataFormatException {
         testScenario0();
     }
-    private static void testScenario0() throws FileNotFoundException, DataFormatException{
+
+    private static void testScenario0() throws FileNotFoundException, DataFormatException {
         /*
-        On lit le fichier carteSujet.map
-        */
-        Simulateur simulation = new Simulateur("C:\\Users\\Sylvain\\Documents\\_ISSC\\Java\\Robots-pompiers\\cartes\\carteSujet.map");
+         On lit le fichier carteSujet.map
+         */
+        Simulateur simulation = new Simulateur(".\\cartes\\carteSujet.map");
         simulation.getGui().setSimulable(simulation);
         /*
-        On déplace le robot au nord 4 fois de suite.
-        */
+         On déplace le robot au nord 4 fois de suite.
+         */
         Robot Buzz = simulation.getData().getRobots().get(0);
         Carte Mappy = simulation.getData().getCarte();
-        for (int i=1;i<5;i++){
-            Evenement Monter= new EventDeplacer(i, Buzz, Direction.NORD);
+        for (int i = 1; i < 5; i++) {
+            Evenement Monter = new EventDeplacer(i, Buzz, Direction.NORD);
             simulation.ajouteEvenement(Monter);
         }
-        
-        //tant que la liste n'est pas vide, on incrémente & on redessine la carte
-       
-        //normalement: throws exception sur setPosition
-        
-        
-}
+
+    }
 }

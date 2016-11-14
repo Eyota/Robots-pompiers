@@ -137,7 +137,7 @@ public class Carte {
      * @param src Case
      * @return renvoie la liste des voisins associés à la Case src
      */
-    public List<Case> ListeVoisins(Case src) {
+    public List<Case> listeVoisins(Case src) {
         ArrayList<Case> List = new ArrayList<Case>();
         try {
             for (Direction dir : Direction.values()) {

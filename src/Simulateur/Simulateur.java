@@ -8,8 +8,6 @@ import elements.events.Evenement;
 import elements.Incendie;
 import elements.NatureTerrain;
 import elements.robots.Robot;
-import static tests.TestPart1.drawFire;
-import static tests.TestPart1.drawRobots;
 import gui.GUISimulator;
 import gui.ImageElement;
 import gui.Rectangle;
@@ -27,7 +25,7 @@ public class Simulateur implements Simulable{
     private DonneesSimulation data;
     private Carte map;
     private String chemin;
-    private List liste = new ArrayList<Evenement>();
+    private List listeEvent = new ArrayList<Evenement>();
     private int date;
     private int taille = 80;
     private ChefPompier master;
@@ -79,12 +77,12 @@ public class Simulateur implements Simulable{
         Evenement enCours;        
         this.incrementeDate();
         if (!this.simulationTerminee()){
-            enCours = (Evenement) this.liste.get(0); 
+            enCours = (Evenement) this.listeEvent.get(0); 
             while (enCours.getDate()<= this.date){
                 enCours.execute();
-                this.liste.remove(0);
+                this.listeEvent.remove(0);
                 if (!this.simulationTerminee()){
-                    enCours = (Evenement) this.liste.get(0);
+                    enCours = (Evenement) this.listeEvent.get(0);
                 }
                 else break;
             }
@@ -94,7 +92,6 @@ public class Simulateur implements Simulable{
         }
         else{
             System.out.println("Simulation terminée");
-            //throw new Exception rattrapée par ??
         }
     }
 
@@ -104,7 +101,7 @@ public class Simulateur implements Simulable{
         this.data = LecteurDonnees.lire(this.chemin); 
         this.map = this.data.getCarte();
         this.date=0;      
-        this.liste= new ArrayList<Evenement>();
+        this.listeEvent= new ArrayList<Evenement>();
         this.master = new ChefPompier(this.data);
         drawMap(gui, map, taille);
         drawFire(gui, this.data.getIncendies(), taille);
@@ -120,8 +117,8 @@ public class Simulateur implements Simulable{
     }
     
     public void ajouteEvenement(Evenement e){
-        this.liste.add(e);
-        Collections.sort(this.liste);
+        this.listeEvent.add(e);
+        Collections.sort(this.listeEvent);
     }
     
     public void incrementeDate(){
@@ -129,13 +126,13 @@ public class Simulateur implements Simulable{
     }
     
     public boolean simulationTerminee(){
-        if (this.liste.isEmpty()){
+        if (this.listeEvent.isEmpty()){
             return true;
         }
         return false;
     }  
     
-    private static void drawMap(GUISimulator gui, Carte map, int taille){       //Ou faire une classe Draw ??
+    private static void drawMap(GUISimulator gui, Carte map, int taille){
         int i,j;
         NatureTerrain type;
         Color couleurCase;
