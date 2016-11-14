@@ -13,6 +13,7 @@ import gui.Rectangle;
 import gui.Simulable;
 import io.LecteurDonnees;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +32,9 @@ public class Simulateur implements Simulable {
     private ChefPompier master;
 
     /**
-     *
+     * Constrruit l'objet Simulateur et prépare la simulation en lisant les
+     * données du fichier dont les fichiers est pris en paramètre et en créant 
+     * le GUISimulator qui gère l'affichage
      * @param path
      */
     public Simulateur(String path) {
@@ -54,18 +57,32 @@ public class Simulateur implements Simulable {
         }
     }
 
+    /**
+     * @return les données de la simulation (carte, incendies et robots)
+     */
     public DonneesSimulation getData() {
         return data;
     }
 
+    /**
+     * @return la date courante de la simulation
+     */
     public int getDate() {
         return date;
     }
 
+    /**
+     * @return GUISimulator (gestionnaire d'affichage graphique)
+     */
     public GUISimulator getGui() {
         return gui;
     }
 
+    /**
+     * incrémente la date courante puis exécute dans l’ordre tous les événements 
+     * non encore exécutés jusqu’à cette date tant que la liste des événements 
+     * n'est pas vide
+     */
     @Override
     public void next() {
         master.strategie2(this);
@@ -91,6 +108,10 @@ public class Simulateur implements Simulable {
         }
     }
 
+    /**
+     * réinitialise la simulation en relisant les données du fichier source et 
+     * en redessinant la carte
+     */
     @Override
     public void restart() {
         try {
@@ -109,15 +130,26 @@ public class Simulateur implements Simulable {
         }
     }
 
+    /**
+     * ajoute un événement à la liste et la retrie par ordre chronologique
+     * @param e l'événement à ajouter
+     */
     public void ajouteEvenement(Evenement e) {
         this.listeEvent.add(e);
         Collections.sort(this.listeEvent);
     }
 
+    /**
+     * incrémente la date d'un pas de 100 pour que la vitesse du programme soit 
+     * raisonnable
+     */
     public void incrementeDate() {
         this.date = this.date + 100;
     }
 
+    /**
+     * Si la liste des événements est vide, la simulation est terminée
+     */
     public boolean simulationTerminee() {
         if (this.listeEvent.isEmpty()) {
             return true;
@@ -125,6 +157,13 @@ public class Simulateur implements Simulable {
         return false;
     }
 
+    /**
+     * Parcourt la matrice représantant la carte et  pour chaque case dessine un 
+     * carré de la couleur correspondante à son type
+     * @param gui
+     * @param map
+     * @param taille 
+     */
     private static void drawMap(GUISimulator gui, Carte map, int taille) {
         int i, j;
         NatureTerrain type;
@@ -161,13 +200,14 @@ public class Simulateur implements Simulable {
 
     }
 
+    
     public static void drawFire(GUISimulator gui, ArrayList<Incendie> ListeIncendies, int taille) {
         int i, x, y;
         for (Incendie incendie : ListeIncendies) {
             if (incendie.getIntensite() > 0) {
                 x = incendie.getPosition().getLigne();
                 y = incendie.getPosition().getColonne();
-                gui.addGraphicalElement(new Rectangle((y + 1) * taille, (x + 1) * taille, Color.red, Color.red, 50));
+                gui.addGraphicalElement(new ImageElement((y + 1) * taille - 30, (x + 1) * taille - 30, "." + File.separator + "pictures" + File.separator + "fire.png", 60, 60, null));
             }
         }
     }
