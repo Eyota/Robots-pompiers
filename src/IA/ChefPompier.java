@@ -1,3 +1,6 @@
+/*
+Numéro de groupe : 50
+*/
 package IA;
 
 import Simulateur.Simulateur;
@@ -21,6 +24,11 @@ public class ChefPompier {
     ArrayList<Incendie> incendies = new ArrayList<Incendie>();
     Carte map;
 
+    /**
+     * Construit l'objet ChefPompier qui va gérer la stratégie des robots 
+     * pompiers
+     * @param data 
+     */
     public ChefPompier(DonneesSimulation data) {
         this.robots = data.getRobots();
         this.incendies = data.getIncendies();

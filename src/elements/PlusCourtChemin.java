@@ -1,4 +1,6 @@
-
+/*
+Numéro de groupe : 50
+*/
 package elements;
 
 import elements.robots.Robot;
@@ -28,7 +30,7 @@ public class PlusCourtChemin {
                 this.duree = 0;                
                 this.chemin.add(new VoisinsDijsktra(arrivee, 0));
             } else {
-                this.ImplementerChemin(dijsktra(structureDepart(wizz)), arrivee, wizz);
+                this.implementerChemin(dijsktra(structureDepart(wizz)), arrivee, wizz);
             }
         } catch (UnreachableCaseException u) {
             System.out.println("Case inaccessible (plus court chemin)");
@@ -49,7 +51,7 @@ public class PlusCourtChemin {
      * @param dst la case de destination du chemin
      * @param wizz le robot qui va se déplacer
      */
-    private void ImplementerChemin(LinkedList<Maillon> tableau, Case dst, Robot wizz) {
+    private void implementerChemin(LinkedList<Maillon> tableau, Case dst, Robot wizz) {
         //dans le cas ou le tableau n'existe pas
         Case precedente = new Case(dst.getLigne(), dst.getColonne(), dst.getNature());
         for (Maillon m : tableau) {
@@ -184,7 +186,7 @@ public class PlusCourtChemin {
      * @return la liste des voisins du maillon
      * @throws UnreachableCaseException 
      */
-    private LinkedList<VoisinsDijsktra> ListeVoisinsD(Maillon a, Robot wizz) throws UnreachableCaseException {
+    private LinkedList<VoisinsDijsktra> listeVoisinsD(Maillon a, Robot wizz) throws UnreachableCaseException {
         //obtenir la liste des voisins avec leur cout
         LinkedList<VoisinsDijsktra> voisins = new LinkedList<>();
 
@@ -219,7 +221,7 @@ public class PlusCourtChemin {
             }
             //on cree la liste des voisin pour chaque maillon
             for (Maillon a : tableauD) {
-                a.setListVoisins(ListeVoisinsD(a, wizz));
+                a.setListVoisins(listeVoisinsD(a, wizz));
                 //on initialise le maillon src a 0
                 if (a.getCourant().equals(wizz.getPosition())) {
                     a.setDuree((int) 0);

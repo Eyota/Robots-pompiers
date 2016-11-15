@@ -1,3 +1,6 @@
+/*
+Numéro de groupe : 50
+*/
 package tests;
 
 import Simulateur.Simulateur;

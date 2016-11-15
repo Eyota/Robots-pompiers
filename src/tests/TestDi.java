@@ -1,8 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+Numéro de groupe : 50
+*/
 package tests;
 
 import Simulateur.Simulateur;
@@ -22,10 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.zip.DataFormatException;
 
-/**
- *
- * @author Camille Gardelle
- */
+
 public class TestDi {
     public static void main(String args[]) {
         
