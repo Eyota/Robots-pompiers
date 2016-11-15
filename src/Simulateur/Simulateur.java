@@ -32,19 +32,21 @@ public class Simulateur implements Simulable {
     private ChefPompier master;
 
     /**
-     * Constrruit l'objet Simulateur et prépare la simulation en lisant les
+     * Construit l'objet Simulateur et prépare la simulation en lisant les
      * données du fichier dont les fichiers est pris en paramètre et en créant 
-     * le GUISimulator qui gère l'affichage
+     * le GUISimulator qui gère l'affichage en fonction de la taille indiquée
      * @param path
+     * @param taille
      */
-    public Simulateur(String path) {
+    public Simulateur(String path, int taille) {
         try {
             this.chemin = path;
             this.date = 0;
+            this.taille=taille;
             this.data = LecteurDonnees.lire(path);
             this.map = this.data.getCarte();
             this.master = new ChefPompier(this.data);
-            this.gui = new GUISimulator(map.getNbColonnes() * taille + 80, map.getNbLignes() * taille + 80, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
+            this.gui = new GUISimulator((map.getNbColonnes()+1) * taille, (map.getNbLignes()+1) * taille, Color.white);   //Paramètres : Hauteur de la fenêtre, largeur de la fenêtre, couleur de fond
             this.gui.setSimulable(this);
             Simulateur.drawMap(gui, map, taille);
             Simulateur.drawFire(gui, this.data.getIncendies(), taille);
@@ -212,7 +214,7 @@ public class Simulateur implements Simulable {
             if (incendie.getIntensite() > 0) {
                 x = incendie.getPosition().getLigne();
                 y = incendie.getPosition().getColonne();
-                gui.addGraphicalElement(new ImageElement((y + 1) * taille - 30, (x + 1) * taille - 30, "." + File.separator + "pictures" + File.separator + "fire.png", 60, 60, null));
+                gui.addGraphicalElement(new ImageElement((y + 1) * taille - (int)(taille*0.3), (x + 1) * taille - (int)(taille*0.3), "." + File.separator + "pictures" + File.separator + "fire.png", (int)(taille*0.6), (int)(taille*0.6), null));
             }
         }
     }
@@ -228,7 +230,7 @@ public class Simulateur implements Simulable {
         for (Robot robot : ListeRobots) {
             x = robot.getPosition().getLigne();
             y = robot.getPosition().getColonne();
-            gui.addGraphicalElement(new ImageElement((y + 1) * taille - 30, (x + 1) * taille - 30, robot.getImage(), 60, 60, null));
+            gui.addGraphicalElement(new ImageElement((y + 1) * taille - (int)(taille*0.3), (x + 1) * taille - (int)(taille*0.3), robot.getImage(), (int)(taille*0.6), (int)(taille*0.6), null));
         }
     }
 }

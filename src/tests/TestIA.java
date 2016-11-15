@@ -12,7 +12,10 @@ public class TestIA {
     }
 
     private static void testIA() throws FileNotFoundException, DataFormatException {
-        Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map");
+        Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map", 80);
+        //Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "desertOfDeath-20x20.map", 40);
+        //Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "mushroomOfHell-20x20.map", 40);
+        //Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "spiralOfMadness-50x50.map", 40);
     }
 
 }

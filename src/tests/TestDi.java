@@ -29,7 +29,7 @@ import java.util.zip.DataFormatException;
 public class TestDi {
     public static void main(String args[]) {
         
-        Simulateur simulation= new Simulateur("." + File.separator + "cartes" + File.separator + "carteTestDi.map");
+        Simulateur simulation= new Simulateur("." + File.separator + "cartes" + File.separator + "carteTestDi.map", 80);
         simulation.getGui().setSimulable(simulation);
         Robot Almo = simulation.getData().getRobots().get(0);
         Incendie petitFeu = simulation.getData().getIncendies().get(0);

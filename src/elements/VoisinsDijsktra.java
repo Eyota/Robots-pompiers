@@ -14,7 +14,7 @@ public class VoisinsDijsktra {
     */
     public VoisinsDijsktra(Case pe){
        this.destination = pe;
-       this.cout = 20000000;
+       this.cout = Integer.MAX_VALUE;
    }
    
    /**

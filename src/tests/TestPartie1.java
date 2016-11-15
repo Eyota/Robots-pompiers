@@ -36,7 +36,7 @@ public class TestPartie1 {
         
         
         //Test sur le simulateur
-        Simulateur sim = new Simulateur("C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\carteSujet.map");
+        Simulateur sim = new Simulateur("C:\\Users\\Agathe\\Documents\\2A\\POO\\Robots-pompiers-master\\cartes\\carteSujet.map", 80);
         
         
         

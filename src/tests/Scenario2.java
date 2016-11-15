@@ -48,7 +48,7 @@ public class Scenario2 {
         /*
         On lit le fichier carteSujet.map
         */
-        Simulateur simulation= new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map");
+        Simulateur simulation= new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map", 80);
         simulation.getGui().setSimulable(simulation);
         int date=1;
         Robot WallE = simulation.getData().getRobots().get(0);

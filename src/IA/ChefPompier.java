@@ -40,7 +40,7 @@ public class ChefPompier {
             //Si le robot est libre et non plein, on l'envoie se remplir sur n'importe quelle case où il peut le faire
             if (robot.estDisponible() && robot.getVolumeEau() < robot.getCapacite()) {
                 Case eau = robot.getPtEau().get(0);
-                System.out.println("Le robot : " + robot.toString() + " va se remplir en : " + eau.toString());
+                System.out.println("Le " + robot.toString() + " va se remplir en : " + eau.toString());
                 courant = new PlusCourtChemin(robot, eau);
                 //Le robot devient indisponible
                 robot.setDisponible(false);
@@ -81,12 +81,12 @@ public class ChefPompier {
     }
 
     public void strategie2(Simulateur simulateur) {
-        double duree = 1000000;
-        double dureeRemplissage = 100000;
+        double duree = Integer.MAX_VALUE;
+        double dureeRemplissage = Integer.MAX_VALUE;
         PlusCourtChemin cheminMin;
         PlusCourtChemin courant;
         for (Robot robot : robots) {
-            dureeRemplissage = 100000;
+            dureeRemplissage = Integer.MAX_VALUE;
             //Si le robot est libre et vide, on l'envoie se remplir vers la case la plus proche
             if (robot.estDisponible() && robot.getVolumeEau() == 0) {
                 //il peut aller le remplir à la case la plus proche
@@ -113,13 +113,12 @@ public class ChefPompier {
         // Pour chaque incendie, on cherche le robot libre le plus proche
         for (Incendie inc : incendies) {
             Robot robotOptimal = null;
-            duree = 1000000;
+            duree = Integer.MAX_VALUE;
             cheminMin = null;
 
             for (Robot robot : robots) {
 
-                if (robot.estDisponible()) {
-                    System.out.println(robot);
+                if (robot.estDisponible()) { 
                     courant = new PlusCourtChemin(robot, inc.getPosition());
                     if (courant.getDuree() <= duree) {
                         cheminMin = courant;
@@ -139,10 +138,13 @@ public class ChefPompier {
                 } else { // si l'incendie n'est pas éteint quand il est arrivé*/
                     robotOptimal.deplacerRobot(simulateur, cheminMin);
                     simulateur.ajouteEvenement(new EventEteindre(simulateur.getDate() + cheminMin.getDuree(), robotOptimal, inc));
-                    System.out.println(simulateur.getDate() + cheminMin.getDuree() + robotOptimal.gettempsIntervention((int) min(inc.getIntensite(), robotOptimal.getVolumeEau())));
                     simulateur.ajouteEvenement(new EventDisponible(simulateur.getDate() + cheminMin.getDuree() + robotOptimal.gettempsIntervention((int) min(inc.getIntensite(), robotOptimal.getVolumeEau())), robotOptimal));
                 }
             }
         }
     }
+    
+    
+    
+    
 }

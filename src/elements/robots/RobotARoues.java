@@ -16,7 +16,7 @@ public class RobotARoues extends Robot {
     private final static int capacite = 5000;
     private final static double vitesse = 80;
     private final static int tempsRemplissage = 10 * 60;
-    private final static double vitesseIntervention = 25;
+    private final static double vitesseIntervention = 20;
 
     public RobotARoues(Carte carte) {
         super(carte, capacite, tempsRemplissage, vitesseIntervention, vitesse);

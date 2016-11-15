@@ -43,7 +43,7 @@ public class Scenario0 {
         /*
          On lit le fichier carteSujet.map
          */
-        Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map");
+        Simulateur simulation = new Simulateur("." + File.separator + "cartes" + File.separator + "carteSujet.map", 80);
         simulation.getGui().setSimulable(simulation);
         /*
          On déplace le robot au nord 4 fois de suite.

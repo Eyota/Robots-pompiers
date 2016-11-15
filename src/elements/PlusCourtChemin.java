@@ -123,7 +123,7 @@ public class PlusCourtChemin {
         VoisinsDijsktra minimum = new VoisinsDijsktra(tableau.get(0).getCourant());
         while (!vide) {
             //on met le premier maillon en minimum, avec le cout max
-            minimum.setCoutV(2000000000);
+            minimum.setCoutV(Integer.MAX_VALUE);
             //on parcours la liste des maillons (le tableau) pour trouver le minimum en cout
             for (Maillon m : tableau) {
                 if (!m.getVisite()) {

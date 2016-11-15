@@ -21,7 +21,7 @@ public class Maillon {
      */
     public Maillon(Case c) {
         this.courant = c;
-        this.dureechemin = 200000;
+        this.dureechemin = Integer.MAX_VALUE;
         this.visite = false;
     }
 
